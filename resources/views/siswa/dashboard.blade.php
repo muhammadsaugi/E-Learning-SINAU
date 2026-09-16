@@ -1,0 +1,403 @@
+@extends('layouts.app')
+
+@section('title', 'SINAU — Siswa')
+
+@section('content')
+<div class="flex h-screen font-sans overflow-hidden">
+
+    <!-- Partial Sidebar Siswa -->
+    @include('partials.sidebar-siswa')
+
+    <!-- Konten Utama Siswa -->
+    <main class="flex-1 overflow-y-auto">
+
+        <!-- ─── DASHBOARD ─── -->
+        <div id="tab-dashboard" class="tab-content active">
+            <div class="max-w-4xl mx-auto px-8 py-8">
+
+                <!-- Header -->
+                <div class="flex items-start justify-between mb-8">
+                    <div>
+                        <p class="text-sm text-[#7A6050] mb-1">Selamat pagi,</p>
+                        <h1 class="font-serif text-3xl font-semibold text-[#2C1A0E]">Kelompok 8 👋</h1>
+                        <p class="text-sm text-[#7A6050] mt-1">Kamu memiliki 3 kursus aktif yang harus diselesaikan.</p>
+                    </div>
+                    <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl px-5 py-3 text-right">
+                        <p class="text-xs text-[#7A6050]">Total XP Diperoleh</p>
+                        <p class="font-serif font-bold text-2xl text-[#7A5C3A]">2.480</p>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl px-5 py-4">
+                        <p class="text-xs text-[#7A6050] mb-1">Kursus Selesai</p>
+                        <p class="font-serif text-2xl font-semibold text-[#2C1A0E]">1</p>
+                        <p class="text-xs text-[#A67C52]">dari 4 kursus</p>
+                    </div>
+                    <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl px-5 py-4">
+                        <p class="text-xs text-[#7A6050] mb-1">Rata-rata Nilai</p>
+                        <p class="font-serif text-2xl font-semibold text-[#2C1A0E]">87</p>
+                        <p class="text-xs text-[#A67C52]">nilai quiz</p>
+                    </div>
+                    <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl px-5 py-4">
+                        <p class="text-xs text-[#7A6050] mb-1">Streak Belajar</p>
+                        <p class="font-serif text-2xl font-semibold text-[#2C1A0E]">12</p>
+                        <p class="text-xs text-[#A67C52]">hari berturut</p>
+                    </div>
+                </div>
+
+                <!-- Kursus Aktif -->
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="font-serif text-xl font-semibold text-[#2C1A0E]">Kursus Aktif</h2>
+                    <button class="text-xs text-[#A67C52] font-medium hover:text-[#7A5C3A] transition-colors">Lihat Semua →</button>
+                </div>
+
+                <div class="space-y-3 mb-8">
+                    <!-- Kursus 1 — SELESAI -->
+                    <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl p-5 hover:border-[#C4A882] hover:shadow-sm transition-all">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1.5">
+                                    <span class="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-[#7A5C3A] text-[#FAF7F2]">Selesai</span>
+                                    <span class="text-xs text-[#7A6050]">Biologi</span>
+                                </div>
+                                <h3 class="font-semibold text-[#2C1A0E] text-sm">Biologi: Sistem Reproduksi</h3>
+                                <p class="text-xs text-[#7A6050] mt-0.5">Ibu Ratna Dewi</p>
+                            </div>
+                            <div class="ml-4 text-right shrink-0">
+                                <span class="text-sm font-bold text-[#7A5C3A]">100%</span>
+                                <p class="text-[10px] text-[#A67C52]">12/12 pelajaran</p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="h-2 bg-[#D4C5A9] rounded-full overflow-hidden">
+                                <div class="h-full rounded-full bg-[#7A5C3A]" style="width:100%"></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <button onclick="downloadCert('Biologi: Sistem Reproduksi')" class="flex items-center gap-2 text-xs font-semibold text-[#FAF7F2] bg-[#7A5C3A] hover:bg-[#5A3E28] px-4 py-2 rounded-lg transition-colors">
+                                ⤓ Unduh Sertifikat
+                            </button>
+                            <span class="text-xs text-[#A67C52] flex items-center gap-1"><span class="text-[#7A5C3A]">✓</span> Tersertifikasi</span>
+                        </div>
+                    </div>
+
+                    <!-- Kursus 2 -->
+                    <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl p-5 hover:border-[#C4A882] hover:shadow-sm transition-all">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1.5">
+                                    <span class="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-[#C4A882] text-[#2C1A0E]">Sedang Berjalan</span>
+                                    <span class="text-xs text-[#7A6050]">Matematika</span>
+                                </div>
+                                <h3 class="font-semibold text-[#2C1A0E] text-sm">Matematika: Integral Tentu</h3>
+                                <p class="text-xs text-[#7A6050] mt-0.5">Bapak Hendra Kurnia</p>
+                            </div>
+                            <div class="ml-4 text-right shrink-0">
+                                <span class="text-sm font-bold text-[#7A5C3A]">65%</span>
+                                <p class="text-[10px] text-[#A67C52]">6/10 pelajaran</p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="h-2 bg-[#D4C5A9] rounded-full overflow-hidden">
+                                <div class="h-full rounded-full bg-[#7A5C3A]" style="width:65%"></div>
+                            </div>
+                        </div>
+                        <button onclick="showTab('materi')" class="text-xs font-semibold text-[#7A5C3A] hover:text-[#5A3E28] transition-colors">Lanjutkan Belajar →</button>
+                    </div>
+
+                    <!-- Kursus 3 -->
+                    <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl p-5 hover:border-[#C4A882] hover:shadow-sm transition-all">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1.5">
+                                    <span class="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-[#C4A882] text-[#2C1A0E]">Sedang Berjalan</span>
+                                    <span class="text-xs text-[#7A6050]">Fisika</span>
+                                </div>
+                                <h3 class="font-semibold text-[#2C1A0E] text-sm">Fisika: Gelombang & Cahaya</h3>
+                                <p class="text-xs text-[#7A6050] mt-0.5">Bapak Dian Pratama</p>
+                            </div>
+                            <div class="ml-4 text-right shrink-0">
+                                <span class="text-sm font-bold text-[#7A5C3A]">40%</span>
+                                <p class="text-[10px] text-[#A67C52]">3/8 pelajaran</p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="h-2 bg-[#D4C5A9] rounded-full overflow-hidden">
+                                <div class="h-full rounded-full bg-[#7A5C3A]" style="width:40%"></div>
+                            </div>
+                        </div>
+                        <button onclick="showTab('materi')" class="text-xs font-semibold text-[#7A5C3A] hover:text-[#5A3E28] transition-colors">Lanjutkan Belajar →</button>
+                    </div>
+                </div>
+
+                <!-- Jadwal Berikutnya -->
+                <div class="bg-[#7A5C3A] rounded-xl p-6 text-[#FAF7F2]">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-xs text-[#C4A882] mb-1 font-medium uppercase tracking-widest">Jadwal Berikutnya</p>
+                            <h3 class="font-serif text-lg font-semibold mb-1">Quiz: Integral Tentu</h3>
+                            <p class="text-sm text-[#C4A882]">Matematika · Bapak Hendra Kurnia</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-[#C4A882]">Berakhir dalam</p>
+                            <p class="font-serif text-2xl font-bold">2 hari</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex gap-3">
+                        <button onclick="showTab('quiz')" class="text-sm font-semibold bg-[#FAF7F2] text-[#7A5C3A] px-5 py-2.5 rounded-lg hover:bg-[#EDE5D8] transition-colors">
+                            Kerjakan Sekarang
+                        </button>
+                        <button onclick="showTab('materi')" class="text-sm font-medium text-[#FAF7F2] border border-[#C4A882]/50 px-5 py-2.5 rounded-lg hover:bg-[#5A3E28] transition-colors">
+                            Pelajari Materi
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ─── MATERI ─── -->
+        <div id="tab-materi" class="tab-content">
+            <div class="max-w-3xl mx-auto px-8 py-8">
+
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-xs text-[#7A6050] mb-6">
+                    <button onclick="showTab('dashboard')" class="hover:text-[#7A5C3A] transition-colors">Dashboard</button>
+                    <span>›</span>
+                    <span class="text-[#2C1A0E]">Matematika: Integral Tentu</span>
+                    <span>›</span>
+                    <span class="text-[#A67C52]">Pelajaran 7</span>
+                </div>
+
+                <div class="mb-6">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-semibold bg-[#C4A882] text-[#2C1A0E] px-2.5 py-0.5 rounded-full">Pelajaran 7 dari 10</span>
+                        <span class="text-[10px] text-[#7A6050]">Matematika</span>
+                    </div>
+                    <h1 class="font-serif text-2xl font-semibold text-[#2C1A0E]">Metode Substitusi pada Integral Tentu</h1>
+                    <p class="text-sm text-[#7A6050] mt-1.5">Bapak Hendra Kurnia · 38 menit · Diperbarui 3 hari lalu</p>
+                </div>
+
+                <!-- Dokumen -->
+                <div class="border-2 border-dashed border-[#C4A882] bg-[#EDE5D8] rounded-xl p-10 mb-5 flex flex-col items-center gap-3 text-center">
+                    <div class="w-14 h-14 bg-[#D4C5A9] rounded-xl flex items-center justify-center text-2xl">📄</div>
+                    <p class="font-semibold text-[#2C1A0E] text-sm">Modul_Integral_Tentu_Bab7.pdf</p>
+                    <p class="text-xs text-[#7A6050]">32 halaman · 2.4 MB</p>
+                    <a href="#" class="text-xs font-medium text-[#7A5C3A] bg-[#D4C5A9] hover:bg-[#C4A882] px-4 py-2 rounded-lg transition-colors mt-1">
+                        ⤓ Unduh Dokumen
+                    </a>
+                </div>
+
+                <!-- Tandai Selesai -->
+                <div class="flex items-center justify-between bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl px-5 py-4 mb-8">
+                    <div>
+                        <p class="text-sm font-semibold text-[#2C1A0E]">Tandai pelajaran ini selesai</p>
+                        <p class="text-xs text-[#7A6050] mt-0.5">Tandai setelah kamu memahami seluruh materi.</p>
+                    </div>
+                    <button onclick="toggleDone(this)" class="done-btn text-sm font-semibold px-5 py-2.5 rounded-lg transition-all bg-[#7A5C3A] text-[#FAF7F2] hover:bg-[#5A3E28]">
+                        Tandai Selesai ✓
+                    </button>
+                </div>
+
+                <!-- Diskusi -->
+                <h2 class="font-serif text-xl font-semibold text-[#2C1A0E] mb-5">Diskusi</h2>
+                <form onsubmit="submitComment(event)" class="mb-6">
+                    <div class="flex gap-3">
+                        <div class="w-9 h-9 rounded-full bg-[#C4A882] flex items-center justify-center text-[#2C1A0E] font-semibold text-sm shrink-0 mt-0.5">K8</div>
+                        <div class="flex-1">
+                            <textarea id="comment-input" placeholder="Tanyakan sesuatu atau bagikan pemahamanmu..." rows="3"
+                                class="w-full bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl px-4 py-3 text-sm text-[#2C1A0E] placeholder-[#A67C52] resize-none focus:outline-none focus:border-[#A67C52]"></textarea>
+                            <div class="flex justify-end mt-2">
+                                <button type="submit" class="text-xs font-semibold bg-[#7A5C3A] text-[#FAF7F2] px-4 py-2 rounded-lg hover:bg-[#5A3E28] transition-colors">Kirim Komentar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div id="comment-list" class="space-y-4">
+                    <div class="flex gap-3">
+                        <div class="w-9 h-9 rounded-full bg-[#D4C5A9] flex items-center justify-center text-[#2C1A0E] font-semibold text-xs shrink-0 mt-0.5">AK</div>
+                        <div class="flex-1">
+                            <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl px-4 py-3">
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <span class="text-sm font-semibold text-[#2C1A0E]">Arini Kusuma</span>
+                                    <span class="text-xs text-[#7A6050]">2 jam lalu</span>
+                                </div>
+                                <p class="text-sm text-[#3D2314]">Penjelasan tentang batas integrasi sangat membantu! Saya akhirnya mengerti perbedaan antara integral tentu dan tak tentu.</p>
+                                <div class="flex items-center gap-1 mt-2">
+                                    <button class="text-xs text-[#A67C52] hover:text-[#7A5C3A]">♡ 12</button>
+                                    <span class="text-[#D4C5A9]">·</span>
+                                    <button class="text-xs text-[#A67C52] hover:text-[#7A5C3A]">Balas</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <div class="w-9 h-9 rounded-full bg-[#D4C5A9] flex items-center justify-center text-[#2C1A0E] font-semibold text-xs shrink-0 mt-0.5">CM</div>
+                        <div class="flex-1">
+                            <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl px-4 py-3">
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <span class="text-sm font-semibold text-[#2C1A0E]">Citra Maharani</span>
+                                    <span class="text-xs text-[#7A6050]">1 hari lalu</span>
+                                </div>
+                                <p class="text-sm text-[#3D2314]">Contoh soal di bagian akhir sangat relevan dengan soal-soal ujian. Terima kasih Pak Hendra!</p>
+                                <div class="flex items-center gap-1 mt-2">
+                                    <button class="text-xs text-[#A67C52] hover:text-[#7A5C3A]">♡ 23</button>
+                                    <span class="text-[#D4C5A9]">·</span>
+                                    <button class="text-xs text-[#A67C52] hover:text-[#7A5C3A]">Balas</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ─── QUIZ ─── -->
+        <div id="tab-quiz" class="tab-content">
+            <div class="max-w-2xl mx-auto px-8 py-12 text-center">
+                <div class="w-16 h-16 rounded-full bg-[#EDE5D8] border border-[#D4C5A9] mx-auto mb-4 flex items-center justify-center text-2xl">✎</div>
+                <h2 class="font-serif text-2xl font-semibold text-[#2C1A0E] mb-2">Evaluasi Kuis</h2>
+                <p class="text-sm text-[#7A6050] mb-6">Quiz: Integral Tentu · Matematika · 5 soal · 30 menit</p>
+                <a href="/siswa" class="inline-block text-sm font-semibold bg-[#7A5C3A] text-[#FAF7F2] px-8 py-3 rounded-xl hover:bg-[#5A3E28] transition-colors">
+                    Mulai Mengerjakan →
+                </a>
+            </div>
+        </div>
+
+        <!-- ─── NILAI ─── -->
+        <div id="tab-nilai" class="tab-content">
+            <div class="max-w-3xl mx-auto px-8 py-8">
+                <div class="mb-8">
+                    <h1 class="font-serif text-3xl font-semibold text-[#2C1A0E]">Rekap Nilai</h1>
+                    <p class="text-sm text-[#7A6050] mt-1">Ringkasan hasil evaluasi dan kuis kamu.</p>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-[#7A5C3A] rounded-xl px-5 py-5 text-[#FAF7F2]">
+                        <p class="text-xs text-[#C4A882] mb-1">Rata-rata Nilai</p>
+                        <p class="font-serif text-4xl font-bold">82</p>
+                        <p class="text-xs text-[#C4A882] mt-0.5">dari 100 poin</p>
+                    </div>
+                    <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl px-5 py-5">
+                        <p class="text-xs text-[#7A6050] mb-1">Kuis Lulus</p>
+                        <p class="font-serif text-4xl font-bold text-[#2C1A0E]">3</p>
+                        <p class="text-xs text-[#A67C52] mt-0.5">dari 4 kuis</p>
+                    </div>
+                    <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl px-5 py-5">
+                        <p class="text-xs text-[#7A6050] mb-1">Nilai Tertinggi</p>
+                        <p class="font-serif text-4xl font-bold text-[#2C1A0E]">95</p>
+                        <p class="text-xs text-[#A67C52] mt-0.5">poin terbaik</p>
+                    </div>
+                </div>
+
+                <!-- Tabel Nilai -->
+                <h2 class="font-serif text-xl font-semibold text-[#2C1A0E] mb-4">Detail Nilai</h2>
+                <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl overflow-hidden">
+                    <div class="grid grid-cols-12 px-5 py-3 border-b border-[#D4C5A9] bg-[#D4C5A9]/50">
+                        <span class="col-span-4 text-xs font-semibold text-[#7A6050] uppercase tracking-wider">Kuis</span>
+                        <span class="col-span-2 text-xs font-semibold text-[#7A6050] uppercase tracking-wider">Tanggal</span>
+                        <span class="col-span-2 text-xs font-semibold text-[#7A6050] uppercase tracking-wider text-center">Nilai</span>
+                        <span class="col-span-1 text-xs font-semibold text-[#7A6050] uppercase tracking-wider text-center">Grade</span>
+                        <span class="col-span-3 text-xs font-semibold text-[#7A6050] uppercase tracking-wider text-right">Status</span>
+                    </div>
+
+                    <div class="grid grid-cols-12 px-5 py-4 items-center border-b border-[#D4C5A9] hover:bg-[#D4C5A9]/20 transition-colors">
+                        <div class="col-span-4">
+                            <p class="text-sm font-medium text-[#2C1A0E]">Quiz: Integral Tentu</p>
+                            <p class="text-xs text-[#7A6050]">Matematika</p>
+                        </div>
+                        <span class="col-span-2 text-xs text-[#7A6050]">12 Jan 2025</span>
+                        <div class="col-span-2 flex items-center justify-center gap-1.5">
+                            <span class="text-sm font-bold text-[#2C1A0E]">85</span>
+                        </div>
+                        <div class="col-span-1 flex justify-center">
+                            <span class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-[#7A5C3A]/15 text-[#7A5C3A]">A</span>
+                        </div>
+                        <div class="col-span-3 flex justify-end">
+                            <span class="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#7A5C3A]/15 text-[#7A5C3A]">Lulus</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 px-5 py-4 items-center hover:bg-[#D4C5A9]/20 transition-colors">
+                        <div class="col-span-4">
+                            <p class="text-sm font-medium text-[#2C1A0E]">Quiz: Gelombang Cahaya</p>
+                            <p class="text-xs text-[#7A6050]">Fisika</p>
+                        </div>
+                        <span class="col-span-2 text-xs text-[#7A6050]">5 Jan 2025</span>
+                        <div class="col-span-2 flex items-center justify-center gap-1.5">
+                            <span class="text-sm font-bold text-[#2C1A0E]">78</span>
+                        </div>
+                        <div class="col-span-1 flex justify-center">
+                            <span class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-[#C4A882]/40 text-[#5A3E28]">B</span>
+                        </div>
+                        <div class="col-span-3 flex justify-end">
+                            <span class="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#7A5C3A]/15 text-[#7A5C3A]">Lulus</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- Tombol Ganti Akun -->
+<a href="/" class="fixed bottom-5 right-5 text-xs text-[#C4A882] hover:text-[#A67C52] transition-colors">← Ganti Akun</a>
+@endsection
+
+@section('scripts')
+<script>
+    function showTab(tab) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(el => {
+            el.classList.remove('nav-active');
+            el.classList.add('text-[#5A3E28]');
+        });
+        document.getElementById('tab-' + tab).classList.add('active');
+        const nav = document.getElementById('nav-' + tab);
+        if (nav) { nav.classList.add('nav-active'); nav.classList.remove('text-[#5A3E28]'); }
+    }
+
+    function toggleDone(btn) {
+        const isDone = btn.dataset.done === '1';
+        if (isDone) {
+            btn.textContent = 'Tandai Selesai ✓';
+            btn.classList.replace('bg-[#D4C5A9]','bg-[#7A5C3A]');
+            btn.classList.replace('text-[#7A6050]','text-[#FAF7F2]');
+            btn.dataset.done = '0';
+        } else {
+            btn.textContent = 'Batalkan';
+            btn.classList.replace('bg-[#7A5C3A]','bg-[#D4C5A9]');
+            btn.classList.replace('text-[#FAF7F2]','text-[#7A6050]');
+            btn.dataset.done = '1';
+        }
+    }
+
+    function submitComment(e) {
+        e.preventDefault();
+        const input = document.getElementById('comment-input');
+        const text = input.value.trim();
+        if (!text) return;
+        const div = document.createElement('div');
+        div.className = 'flex gap-3';
+        div.innerHTML = `<div class="w-9 h-9 rounded-full bg-[#C4A882] flex items-center justify-center text-[#2C1A0E] font-semibold text-xs shrink-0 mt-0.5">K8</div>
+            <div class="flex-1"><div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl px-4 py-3">
+                <div class="flex items-center justify-between mb-1.5"><span class="text-sm font-semibold text-[#2C1A0E]">Kelompok 8</span><span class="text-xs text-[#7A6050]">Baru saja</span></div>
+                <p class="text-sm text-[#3D2314]">${text}</p></div></div>`;
+        document.getElementById('comment-list').prepend(div);
+        input.value = '';
+    }
+
+    function downloadCert(title) {
+        const blob = new Blob([`SERTIFIKAT PENYELESAIAN\n\nDiberikan kepada: Kelompok 8\nKursus: ${title}\n\nPlatform SINAU`], {type:'text/plain'});
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+        a.download = 'Sertifikat-' + title.replace(/[^a-z0-9]/gi,'_') + '.txt'; a.click();
+    }
+</script>
+@endsection

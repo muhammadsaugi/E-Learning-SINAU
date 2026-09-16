@@ -1,0 +1,61 @@
+@extends('layouts.guest')
+
+@section('title', 'SINAU — Login')
+
+@section('content')
+<div class="w-full max-w-2xl">
+    <!-- Header -->
+    <div class="text-center mb-10">
+        <div class="inline-flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-[#7A5C3A] flex items-center justify-center">
+                <span class="text-[#FAF7F2] font-serif font-bold">S</span>
+            </div>
+            <span class="font-serif text-2xl font-semibold text-[#2C1A0E] tracking-wide">SINAU</span>
+        </div>
+        <p class="text-sm text-[#7A6050]">Platform Pembelajaran Digital · Pilih peran Anda untuk masuk</p>
+    </div>
+
+    <!-- Role Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+        <!-- Siswa -->
+        <a href="/siswa" class="group bg-[#EDE5D8] border border-[#D4C5A9] rounded-2xl p-7 flex flex-col items-center gap-4 hover:border-[#7A5C3A] hover:shadow-md transition-all duration-200 cursor-pointer text-center">
+            <div class="w-16 h-16 rounded-2xl bg-[#D4C5A9] group-hover:bg-[#7A5C3A] flex items-center justify-center text-2xl transition-colors duration-200">
+                🎓
+            </div>
+            <div>
+                <p class="font-serif text-lg font-semibold text-[#2C1A0E]">Siswa</p>
+                <p class="text-xs text-[#7A6050] mt-1">Akses materi, kuis, dan nilai kamu</p>
+            </div>
+            <span class="text-xs font-semibold text-[#7A5C3A] group-hover:text-[#5A3E28] transition-colors">Masuk sebagai Siswa →</span>
+        </a>
+
+        <!-- Guru -->
+        <a href="/guru" class="group bg-[#EDE5D8] border border-[#D4C5A9] rounded-2xl p-7 flex flex-col items-center gap-4 hover:border-[#7A5C3A] hover:shadow-md transition-all duration-200 cursor-pointer text-center">
+            <div class="w-16 h-16 rounded-2xl bg-[#D4C5A9] group-hover:bg-[#7A5C3A] flex items-center justify-center text-2xl transition-colors duration-200">
+                👨‍🏫
+            </div>
+            <div>
+                <p class="font-serif text-lg font-semibold text-[#2C1A0E]">Guru</p>
+                <p class="text-xs text-[#7A6050] mt-1">Kelola nilai, materi, dan kelas</p>
+            </div>
+            <span class="text-xs font-semibold text-[#7A5C3A] group-hover:text-[#5A3E28] transition-colors">Masuk sebagai Guru →</span>
+        </a>
+
+        <!-- Admin -->
+        <a href="/admin" class="group bg-[#EDE5D8] border border-[#D4C5A9] rounded-2xl p-7 flex flex-col items-center gap-4 hover:border-[#7A5C3A] hover:shadow-md transition-all duration-200 cursor-pointer text-center">
+            <div class="w-16 h-16 rounded-2xl bg-[#D4C5A9] group-hover:bg-[#7A5C3A] flex items-center justify-center text-2xl transition-colors duration-200">
+                ⚙️
+            </div>
+            <div>
+                <p class="font-serif text-lg font-semibold text-[#2C1A0E]">Admin</p>
+                <p class="text-xs text-[#7A6050] mt-1">Pantau aktivitas & kelola platform</p>
+            </div>
+            <span class="text-xs font-semibold text-[#7A5C3A] group-hover:text-[#5A3E28] transition-colors">Masuk sebagai Admin →</span>
+        </a>
+
+    </div>
+
+    <p class="text-center text-xs text-[#C4A882] mt-8">© 2024 SINAU · Platform Belajar Digital</p>
+</div>
+@endsection
