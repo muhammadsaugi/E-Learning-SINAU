@@ -219,7 +219,7 @@
                     </div>
                 </div>
 
-                <!-- ─── UNGGAH MATERI (PDF/Word, maks 20MB) ─── -->
+                <!-- ─── UNGGAH MATERI ─── -->
                 <div id="tab-materi" class="tab-content">
                     <h2 class="font-serif text-xl font-semibold text-[#2C1A0E] mb-2">Unggah Materi Pembelajaran</h2>
                     <p class="text-sm text-[#7A6050] mb-5">Unggah dokumen materi (PDF atau Word) untuk diakses siswa.</p>
@@ -248,54 +248,71 @@
                     </div>
                 </div>
 
-                <!-- ─── KELOLA KELAS ─── -->
+                <!-- ─── KELOLA KELAS (Dihubungkan ke Database) ─── -->
                 <div id="tab-kelas" class="tab-content">
                     <h2 class="font-serif text-xl font-semibold text-[#2C1A0E] mb-2">Buat & Kelola Kelas</h2>
                     <p class="text-sm text-[#7A6050] mb-5">Atur kelas yang kamu ampu, jadwal, dan status aktifnya.</p>
+                    
+                    <!-- Daftar Kelas Dinamis dari Database -->
                     <div class="space-y-3 mb-6">
-                        <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl px-5 py-4">
-                            <div class="flex items-start justify-between">
-                                <div>
-                                    <div class="flex items-center gap-2 mb-1">
-                                        <p class="text-sm font-semibold text-[#2C1A0E]">XII IPA 2</p>
-                                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#7A5C3A] text-[#FAF7F2]">Aktif</span>
+                        @if(isset($kelasList) && $kelasList->count() > 0)
+                            @foreach($kelasList as $kelas)
+                                <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl px-5 py-4">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <p class="text-sm font-semibold text-[#2C1A0E]">{{ $kelas->nama_kelas }}</p>
+                                                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#7A5C3A] text-[#FAF7F2]">Kode: {{ $kelas->kode_kelas }}</span>
+                                            </div>
+                                            <p class="text-xs text-[#7A6050]">{{ $kelas->mata_pelajaran }}</p>
+                                            @if($kelas->deskripsi)
+                                                <p class="text-xs text-[#A67C52] mt-0.5">📝 {{ $kelas->deskripsi }}</p>
+                                            @endif
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <form action="{{ route('guru.kelas.destroy', $kelas->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus kelas ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-xs font-medium text-red-700 hover:text-red-900 px-2 py-1.5 rounded-lg border border-red-300 hover:bg-red-50 transition-colors">Hapus</button>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <p class="text-xs text-[#7A6050]">Matematika · 32 siswa</p>
-                                    <p class="text-xs text-[#A67C52] mt-0.5">⏰ Senin 08.00–09.30</p>
                                 </div>
-                                <div class="flex gap-2">
-                                    <button class="text-xs font-medium bg-[#D4C5A9] text-[#5A3E28] px-3 py-1.5 rounded-lg hover:bg-[#C4A882] transition-colors">Edit</button>
-                                    <button class="text-xs font-medium text-[#C4A882] hover:text-[#A67C52] px-2 py-1.5">✕</button>
-                                </div>
+                            @endforeach
+                        @else
+                            <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl px-5 py-6 text-center">
+                                <p class="text-xs text-[#7A6050] italic">Belum ada kelas yang dibuat. Silakan buat kelas baru di bawah.</p>
                             </div>
-                        </div>
+                        @endif
                     </div>
 
-                    <!-- Form Buat Kelas Baru -->
-                    <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl p-5">
+                    <!-- Form Buat Kelas Baru (POST ke route('guru.kelas.store')) -->
+                    <form action="{{ route('guru.kelas.store') }}" method="POST" class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl p-5 shadow-sm">
+                        @csrf
                         <p class="text-xs font-semibold text-[#A67C52] uppercase tracking-widest mb-4">Buat Kelas Baru</p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
                             <div>
-                                <label class="text-[10px] text-[#7A6050] font-medium mb-1 block">Nama Kelas</label>
-                                <input type="text" placeholder="Contoh: XII IPA 4" class="w-full bg-[#F7F3EC] border border-[#D4C5A9] rounded-lg px-3 py-2 text-sm text-[#2C1A0E] focus:outline-none focus:border-[#A67C52]" />
+                                <label class="text-[10px] text-[#7A6050] font-medium mb-1 block">Nama Kelas *</label>
+                                <input type="text" name="nama_kelas" required placeholder="Contoh: XII IPA 4" class="w-full bg-[#F7F3EC] border border-[#D4C5A9] rounded-lg px-3 py-2 text-sm text-[#2C1A0E] focus:outline-none focus:border-[#7A5C3A]" />
                             </div>
                             <div>
-                                <label class="text-[10px] text-[#7A6050] font-medium mb-1 block">Mata Pelajaran</label>
-                                <select class="w-full bg-[#F7F3EC] border border-[#D4C5A9] rounded-lg px-3 py-2 text-sm text-[#2C1A0E] focus:outline-none">
-                                    <option>Matematika</option><option>Biologi</option><option>Fisika</option><option>Kimia</option>
+                                <label class="text-[10px] text-[#7A6050] font-medium mb-1 block">Mata Pelajaran *</label>
+                                <select name="mata_pelajaran" class="w-full bg-[#F7F3EC] border border-[#D4C5A9] rounded-lg px-3 py-2 text-sm text-[#2C1A0E] focus:outline-none focus:border-[#7A5C3A]">
+                                    <option value="Matematika">Matematika</option>
+                                    <option value="Biologi">Biologi</option>
+                                    <option value="Fisika">Fisika</option>
+                                    <option value="Kimia">Kimia</option>
+                                    <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                                    <option value="Bahasa Inggris">Bahasa Inggris</option>
                                 </select>
                             </div>
-                            <div>
-                                <label class="text-[10px] text-[#7A6050] font-medium mb-1 block">Jadwal</label>
-                                <input type="text" placeholder="Senin 08.00–09.30" class="w-full bg-[#F7F3EC] border border-[#D4C5A9] rounded-lg px-3 py-2 text-sm text-[#2C1A0E] focus:outline-none focus:border-[#A67C52]" />
-                            </div>
-                            <div>
-                                <label class="text-[10px] text-[#7A6050] font-medium mb-1 block">Kapasitas Siswa</label>
-                                <input type="number" placeholder="32" class="w-full bg-[#F7F3EC] border border-[#D4C5A9] rounded-lg px-3 py-2 text-sm text-[#2C1A0E] focus:outline-none focus:border-[#A67C52]" />
+                            <div class="md:col-span-2">
+                                <label class="text-[10px] text-[#7A6050] font-medium mb-1 block">Deskripsi / Jadwal (Opsional)</label>
+                                <input type="text" name="deskripsi" placeholder="Contoh: Setiap Senin 08.00–09.30" class="w-full bg-[#F7F3EC] border border-[#D4C5A9] rounded-lg px-3 py-2 text-sm text-[#2C1A0E] focus:outline-none focus:border-[#7A5C3A]" />
                             </div>
                         </div>
-                        <button class="text-xs font-semibold bg-[#7A5C3A] text-[#FAF7F2] px-5 py-2.5 rounded-lg hover:bg-[#5A3E28] transition-colors">+ Buat Kelas</button>
-                    </div>
+                        <button type="submit" class="text-xs font-semibold bg-[#7A5C3A] text-[#FAF7F2] px-5 py-2.5 rounded-lg hover:bg-[#5A3E28] transition-colors shadow-sm">+ Buat Kelas</button>
+                    </form>
                 </div>
 
             </div>
