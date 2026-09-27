@@ -32,7 +32,6 @@
     <!-- Partial Alert / Toast -->
     @include('partials.alert')
 
-    <!-- Yield Area Konten Utama -->
     @yield('content')
 
     <!-- Yield Javascript -->

@@ -23,4 +23,20 @@ class Kelas extends Model
     {
         return $this->belongsTo(User::class, 'guru_id');
     }
+
+    /**
+     * Relasi ke Materi
+     */
+    public function materi()
+    {
+        return $this->hasMany(Materi::class, 'kelas_id');
+    }
+
+    /**
+     * Relasi ke Kuis
+     */
+    public function kuis()
+    {
+        return $this->hasMany(Kuis::class, 'kelas_id');
+    }
 }

@@ -4,7 +4,7 @@ Platform pembelajaran daring (e-learning) berbasis Laravel dengan pemanfaatan **
 
 ---
 
-## 📋 Prasyarat Sistem (Prerequisites)
+## Prasyarat Sistem (Prerequisites)
 
 Pastikan komputer/laptop Anda telah terpasang:
 - **PHP** (>= 8.2)
@@ -14,7 +14,7 @@ Pastikan komputer/laptop Anda telah terpasang:
 
 ---
 
-## 🚀 Panduan Instalasi & Menjalankan Project
+## Panduan Instalasi & Menjalankan Project
 
 Ikuti langkah-langkah berikut secara berurutan di terminal:
 
@@ -73,7 +73,7 @@ Buka browser dan akses URL berikut:
 
 ---
 
-## 📁 Struktur Template Blade
+## Struktur Template Blade
 - `resources/views/layouts/` : Master layout (`app.blade.php`, `guest.blade.php`)
 - `resources/views/partials/`: Komponen modular (`topbar`, `sidebar-admin`, `sidebar-guru`, `sidebar-siswa`, `alert`)
 - `resources/views/auth/`    : Halaman login

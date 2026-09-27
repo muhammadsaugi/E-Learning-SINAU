@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     /**
-     * Tampilkan halaman login / pilih role.
+     * Tampilkan halaman login 
      */
     public function showLogin()
     {
@@ -17,7 +17,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Proses Login manual dengan Email & Password dan pisahkan redirect per role.
+     * Proses Login 
      */
     public function login(Request $request)
     {

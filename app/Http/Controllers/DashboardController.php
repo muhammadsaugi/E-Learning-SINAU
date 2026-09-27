@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
+use App\Models\Materi;
+use App\Models\Kuis;
+use App\Models\Nilai;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -31,10 +36,18 @@ class DashboardController extends Controller
     }
 
     /**
-     * Menampilkan halaman dashboard Siswa.
+     * Menampilkan halaman dashboard Siswa (data dinamis dari database).
      */
     public function siswa()
     {
-        return view('siswa.dashboard');
+        $siswa = User::where('role', 'siswa')->first();
+        $siswaId = auth()->id() ?? ($siswa ? $siswa->id : 3);
+
+        $kelasList = Kelas::with(['guru', 'materi', 'kuis'])->latest()->get();
+        $materiList = Materi::with('kelas')->latest()->get();
+        $kuisList = Kuis::with(['kelas', 'soal', 'nilai'])->latest()->get();
+        $nilaiList = Nilai::with(['kuis.kelas'])->where('siswa_id', $siswaId)->latest()->get();
+
+        return view('siswa.dashboard', compact('kelasList', 'materiList', 'kuisList', 'nilaiList', 'siswaId'));
     }
 }
