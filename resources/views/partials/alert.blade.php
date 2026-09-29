@@ -1,23 +1,55 @@
-<!-- Flash Messages & Validation Alert (Partial) -->
+<!-- Flash Messages & Validation Alert -->
 @if(session('success'))
-    <div class="fixed top-5 right-5 z-50 bg-[#2C1A0E] text-[#FAF7F2] border border-[#A67C52] text-xs font-semibold px-5 py-3 rounded-xl shadow-xl flex items-center gap-2 animate-bounce">
-        <span>✓</span>
-        <span>{{ session('success') }}</span>
+    <div id="flash-success" class="fixed top-5 right-5 z-50 flex items-start gap-3 bg-[#241508] text-[#FAF8F4] text-xs font-medium px-5 py-3.5 rounded-xl shadow-2xl border border-[#8B6340]/50 max-w-sm">
+        <div class="w-5 h-5 rounded-full bg-[#8B6340] flex items-center justify-center shrink-0 mt-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+            </svg>
+        </div>
+        <div>
+            <p class="font-semibold text-[#E6D9C6] text-[11px] uppercase tracking-wide mb-0.5">Berhasil</p>
+            <p class="text-[#FAF8F4]">{{ session('success') }}</p>
+        </div>
+        <button onclick="document.getElementById('flash-success').remove()" class="ml-2 text-[#A87C52] hover:text-[#FAF8F4] transition-colors mt-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
     </div>
 @endif
 
 @if($errors->any())
-    <div class="fixed top-5 right-5 z-50 bg-red-800 text-white border border-red-500 text-xs font-semibold px-5 py-3.5 rounded-xl shadow-xl space-y-1">
-        <div class="flex items-center gap-2 mb-1">
-            <span>⚠️</span>
-            <span class="font-bold">Terjadi Kesalahan Validasi:</span>
+    <div id="flash-error" class="fixed top-5 right-5 z-50 flex items-start gap-3 bg-red-900 text-white text-xs font-medium px-5 py-3.5 rounded-xl shadow-2xl border border-red-700 max-w-sm">
+        <div class="w-5 h-5 rounded-full bg-red-700 flex items-center justify-center shrink-0 mt-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
         </div>
-        <ul class="list-disc pl-5 font-normal text-[11px] space-y-0.5">
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+        <div>
+            <p class="font-semibold text-red-200 text-[11px] uppercase tracking-wide mb-1">Validasi Gagal</p>
+            <ul class="space-y-0.5 list-none">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        <button onclick="document.getElementById('flash-error').remove()" class="ml-2 text-red-400 hover:text-white transition-colors mt-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
     </div>
 @endif
 
-<div id="toast" class="fixed top-5 right-5 z-50 bg-[#2C1A0E] text-[#FAF7F2] text-xs font-medium px-5 py-3 rounded-xl shadow-lg"></div>
+<div id="toast" class="fixed top-5 right-5 z-50 bg-[#241508] text-[#FAF8F4] text-xs font-medium px-5 py-3 rounded-xl shadow-lg border border-[#8B6340]/30"></div>
+
+<script>
+// Auto-dismiss flash messages after 4 seconds
+document.addEventListener('DOMContentLoaded', () => {
+    ['flash-success', 'flash-error'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) setTimeout(() => el.style.opacity = '0', 3500);
+        if (el) setTimeout(() => el.remove(), 4000);
+    });
+});
+</script>

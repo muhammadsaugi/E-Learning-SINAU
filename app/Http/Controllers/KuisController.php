@@ -9,11 +9,10 @@ use Illuminate\Http\Request;
 class KuisController extends Controller
 {
     /**
-     * Menyimpan kuis baru dengan validasi lengkap.
+     * Menyimpan kuis baru dengan validasi lengkap (Create Data).
      */
     public function store(Request $request)
     {
-        // 1. Validasi Input Form
         $validated = $request->validate([
             'kelas_id'      => 'required|exists:kelas,id',
             'judul'         => 'required|string|min:3|max:255',
@@ -32,10 +31,34 @@ class KuisController extends Controller
             'passing_grade.max'      => 'Passing grade maksimal 100.',
         ]);
 
-        // 2. Simpan ke database
         Kuis::create($validated);
 
         return redirect('/guru#banksoal')->with('success', 'Kuis / Ujian baru berhasil dibuat! Silakan tambahkan butir soal di bawah.');
+    }
+
+    /**
+     * Memperbarui informasi kuis (Update Data).
+     */
+    public function update(Request $request, $id)
+    {
+        $kuis = Kuis::findOrFail($id);
+
+        $validated = $request->validate([
+            'kelas_id'      => 'required|exists:kelas,id',
+            'judul'         => 'required|string|min:3|max:255',
+            'durasi_menit'  => 'required|integer|min:5|max:180',
+            'passing_grade' => 'required|integer|min:0|max:100',
+        ], [
+            'kelas_id.required'      => 'Silakan pilih kelas untuk kuis ini.',
+            'kelas_id.exists'        => 'Kelas yang dipilih tidak valid.',
+            'judul.required'         => 'Judul kuis wajib diisi.',
+            'durasi_menit.required'  => 'Durasi pengerjaan kuis wajib diisi.',
+            'passing_grade.required' => 'Passing grade wajib diisi.',
+        ]);
+
+        $kuis->update($validated);
+
+        return redirect('/guru#banksoal')->with('success', "Kuis '{$kuis->judul}' berhasil diperbarui!");
     }
 
     /**
@@ -66,7 +89,7 @@ class KuisController extends Controller
     }
 
     /**
-     * Hapus kuis beserta seluruh soalnya.
+     * Hapus kuis beserta seluruh soalnya (Delete Data).
      */
     public function destroy($id)
     {
@@ -77,7 +100,7 @@ class KuisController extends Controller
     }
 
     /**
-     * Hapus butir soal.
+     * Hapus butir soal (Delete Data).
      */
     public function destroySoal($id)
     {
@@ -93,7 +116,7 @@ class KuisController extends Controller
     public function submitJawaban(Request $request, $id)
     {
         $kuis = Kuis::with('soal')->findOrFail($id);
-        $jawabanSiswa = $request->input('jawaban', []); // Array [soal_id => jawaban]
+        $jawabanSiswa = $request->input('jawaban', []);
 
         $totalSoal = $kuis->soal->count();
         if ($totalSoal === 0) {
@@ -111,7 +134,6 @@ class KuisController extends Controller
                     $benar++;
                 }
             } else {
-                // Untuk esai, jika diisi kita anggap terjawab
                 if (!empty($jawabanSiswa[$soal->id])) {
                     $benar++;
                 }
@@ -122,11 +144,9 @@ class KuisController extends Controller
         $isLulus = $skor >= $kuis->passing_grade;
         $grade = $skor >= 85 ? 'A' : ($skor >= 70 ? 'B' : ($skor >= 55 ? 'C' : 'D'));
 
-        // Ambil user siswa yang sedang login atau siswa default
         $siswa = \App\Models\User::where('role', 'siswa')->first();
         $siswaId = auth()->id() ?? ($siswa ? $siswa->id : 3);
 
-        // Simpan atau update nilai ke database
         \App\Models\Nilai::updateOrCreate(
             ['siswa_id' => $siswaId, 'kuis_id' => $kuis->id],
             [

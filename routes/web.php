@@ -23,18 +23,22 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/admin', [DashboardController::class, 'admin'])->name('admin');
 Route::get('/siswa', [DashboardController::class, 'siswa'])->name('siswa');
 
-// Dashboard Guru & Fitur Kelas (Create, Read, Delete)
+// Dashboard Guru & Fitur Kelas (Create, Read, Detail, Update, Delete, Search)
 Route::get('/guru', [KelasController::class, 'index'])->name('guru');
 Route::post('/guru/kelas', [KelasController::class, 'store'])->name('guru.kelas.store');
+Route::get('/guru/kelas/{id}', [KelasController::class, 'show'])->name('guru.kelas.show');
+Route::put('/guru/kelas/{id}', [KelasController::class, 'update'])->name('guru.kelas.update');
 Route::delete('/guru/kelas/{id}', [KelasController::class, 'destroy'])->name('guru.kelas.destroy');
 
-// Fitur Materi (Create, Delete, Download)
+// Fitur Materi (Create, Update, Delete, Download)
 Route::post('/guru/materi', [MateriController::class, 'store'])->name('guru.materi.store');
+Route::put('/guru/materi/{id}', [MateriController::class, 'update'])->name('guru.materi.update');
 Route::delete('/guru/materi/{id}', [MateriController::class, 'destroy'])->name('guru.materi.destroy');
 Route::get('/materi/download/{id}', [MateriController::class, 'download'])->name('materi.download');
 
-// Fitur Kuis & Soal Guru (Create, Delete, Tambah Butir Soal PG / Esai)
+// Fitur Kuis & Soal Guru (Create, Update, Delete, Tambah Butir Soal PG / Esai)
 Route::post('/guru/kuis', [KuisController::class, 'store'])->name('guru.kuis.store');
+Route::put('/guru/kuis/{id}', [KuisController::class, 'update'])->name('guru.kuis.update');
 Route::delete('/guru/kuis/{id}', [KuisController::class, 'destroy'])->name('guru.kuis.destroy');
 Route::post('/guru/soal', [KuisController::class, 'storeSoal'])->name('guru.soal.store');
 Route::delete('/guru/soal/{id}', [KuisController::class, 'destroySoal'])->name('guru.soal.destroy');

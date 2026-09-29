@@ -1,24 +1,52 @@
 <!-- ─── TAB NILAI ESAI ─── -->
 <div id="tab-esai" class="tab-content">
-    <h2 class="font-serif text-xl font-semibold text-[#2C1A0E] mb-2">Nilai Ujian Esai</h2>
-    <p class="text-sm text-[#7A6050] mb-5">Berikan nilai untuk jawaban esai yang dikumpulkan siswa.</p>
+    <div class="mb-6">
+        <h1 class="font-display text-2xl text-[#241508]">Nilai Esai</h1>
+        <p class="text-sm text-[#8B6340] mt-0.5">Berikan nilai untuk jawaban esai yang dikumpulkan siswa.</p>
+    </div>
     <div class="space-y-3">
-        <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl px-5 py-4">
+        <div class="data-card bg-white border border-[#E6D9C6] rounded-xl px-5 py-4">
             <div class="flex items-start justify-between gap-4">
-                <div class="flex items-start gap-3 flex-1">
-                    <div class="w-8 h-8 rounded-full bg-[#C4A882] flex items-center justify-center text-[#2C1A0E] text-xs font-semibold shrink-0 mt-0.5">AK</div>
-                    <div>
-                        <p class="text-sm font-semibold text-[#2C1A0E]">Arini Kusuma</p>
-                        <p class="text-xs text-[#7A6050] mb-1">Matematika · Dikumpulkan 10 Jan 2025</p>
-                        <p class="text-xs text-[#3D2314] italic">"Analisis Penerapan Integral dalam Kehidupan Nyata"</p>
+                <div class="flex items-start gap-3 flex-1 min-w-0">
+                    <div class="w-8 h-8 rounded-full bg-[#D4C0A0] flex items-center justify-center text-[#4A2E1A] text-xs font-semibold shrink-0 mt-0.5">AK</div>
+                    <div class="min-w-0">
+                        <p class="text-sm font-semibold text-[#241508]">Arini Kusuma</p>
+                        <p class="text-[11px] text-[#A87C52] mb-1.5">Matematika · Dikumpulkan 10 Jan 2025</p>
+                        <p class="text-xs text-[#6E4A2E] italic bg-[#FAF8F4] border border-[#F3EDE2] rounded-lg px-3 py-2">
+                            "Analisis Penerapan Integral dalam Kehidupan Nyata"
+                        </p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 shrink-0">
                     <input type="number" min="0" max="100" placeholder="0–100"
                         onkeydown="if(event.key==='Enter') simpanNilai(this)"
-                        class="w-20 bg-[#F7F3EC] border border-[#D4C5A9] rounded-lg px-3 py-1.5 text-sm text-[#2C1A0E] focus:outline-none focus:border-[#A67C52] text-center" />
+                        class="w-20 bg-[#FAF8F4] border border-[#E6D9C6] rounded-lg px-3 py-2 text-sm text-[#241508] focus:outline-none focus:border-[#8B6340] text-center" />
                     <button onclick="simpanNilai(this.previousElementSibling)"
-                        class="text-xs font-semibold bg-[#7A5C3A] text-[#FAF7F2] px-3 py-1.5 rounded-lg hover:bg-[#5A3E28] transition-colors">
+                        class="text-xs font-semibold bg-[#4A2E1A] text-[#FAF8F4] px-3 py-2 rounded-lg hover:bg-[#241508] transition-colors">
+                        Simpan
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-card bg-white border border-[#E6D9C6] rounded-xl px-5 py-4">
+            <div class="flex items-start justify-between gap-4">
+                <div class="flex items-start gap-3 flex-1 min-w-0">
+                    <div class="w-8 h-8 rounded-full bg-[#D4C0A0] flex items-center justify-center text-[#4A2E1A] text-xs font-semibold shrink-0 mt-0.5">BP</div>
+                    <div class="min-w-0">
+                        <p class="text-sm font-semibold text-[#241508]">Bagas Pratama</p>
+                        <p class="text-[11px] text-[#A87C52] mb-1.5">Biologi · Dikumpulkan 8 Jan 2025</p>
+                        <p class="text-xs text-[#6E4A2E] italic bg-[#FAF8F4] border border-[#F3EDE2] rounded-lg px-3 py-2">
+                            "Peran Sistem Reproduksi dalam Keberlangsungan Makhluk Hidup"
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                    <input type="number" min="0" max="100" placeholder="0–100"
+                        onkeydown="if(event.key==='Enter') simpanNilai(this)"
+                        class="w-20 bg-[#FAF8F4] border border-[#E6D9C6] rounded-lg px-3 py-2 text-sm text-[#241508] focus:outline-none focus:border-[#8B6340] text-center" />
+                    <button onclick="simpanNilai(this.previousElementSibling)"
+                        class="text-xs font-semibold bg-[#4A2E1A] text-[#FAF8F4] px-3 py-2 rounded-lg hover:bg-[#241508] transition-colors">
                         Simpan
                     </button>
                 </div>

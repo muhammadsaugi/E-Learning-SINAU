@@ -1,118 +1,121 @@
-<!-- 1. Form Buat Kuis Baru (Create Kuis) -->
-<form action="{{ route('guru.kuis.store') }}" method="POST" class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl p-5 mb-5 shadow-sm">
-    @csrf
-    <p class="text-xs font-semibold text-[#A67C52] uppercase tracking-widest mb-3">1. Buat Kuis / Ujian Baru</p>
-    
-    <div class="mb-3">
-        <label class="text-[10px] text-[#7A6050] font-medium mb-1 block">Judul Kuis / Topik Ujian *</label>
-        <input type="text" name="judul" value="{{ old('judul') }}" required placeholder="Contoh: Kuis 1: Penerapan Integral Tentu"
-            class="w-full bg-[#F7F3EC] border @error('judul') border-red-500 @else border-[#D4C5A9] @enderror rounded-lg px-4 py-2.5 text-sm text-[#2C1A0E] focus:outline-none focus:border-[#7A5C3A]" />
-        @error('judul') <p class="text-red-700 text-xs mt-1">{{ $message }}</p> @enderror
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-        <div>
-            <label class="text-[10px] text-[#7A6050] font-medium mb-1 block">Pilih Kelas *</label>
-            <select name="kelas_id" required class="w-full bg-[#F7F3EC] border @error('kelas_id') border-red-500 @else border-[#D4C5A9] @enderror rounded-lg px-3 py-2 text-xs text-[#2C1A0E] focus:outline-none focus:border-[#7A5C3A]">
-                <option value="">-- Pilih Kelas --</option>
-                @if(isset($kelasList))
-                    @foreach($kelasList as $k)
-                        <option value="{{ $k->id }}" {{ old('kelas_id') == $k->id ? 'selected' : '' }}>{{ $k->nama_kelas }} ({{ $k->mata_pelajaran }})</option>
-                    @endforeach
-                @endif
-            </select>
-            @error('kelas_id') <p class="text-red-700 text-xs mt-1">{{ $message }}</p> @enderror
+<!-- Form Buat Kuis Baru -->
+<div class="bg-white border border-[#E6D9C6] rounded-xl p-5 mb-4">
+    <p class="text-[11px] font-semibold text-[#A87C52] uppercase tracking-widest mb-4">1. Buat Kuis Baru</p>
+    <form action="{{ route('guru.kuis.store') }}" method="POST">
+        @csrf
+        <div class="mb-4">
+            <label class="block text-xs font-medium text-[#4A2E1A] mb-1.5">Judul Kuis <span class="text-red-500">*</span></label>
+            <input type="text" name="judul" value="{{ old('judul') }}" required placeholder="cth: Kuis 1 — Penerapan Integral Tentu"
+                class="form-input @error('judul') border-red-400 @enderror" />
+            @error('judul') <p class="text-red-600 text-[11px] mt-1">{{ $message }}</p> @enderror
         </div>
-        <div>
-            <label class="text-[10px] text-[#7A6050] font-medium mb-1 block">Durasi (Menit) *</label>
-            <input type="number" name="durasi_menit" value="{{ old('durasi_menit', 30) }}" min="5" max="180" required
-                class="w-full bg-[#F7F3EC] border @error('durasi_menit') border-red-500 @else border-[#D4C5A9] @enderror rounded-lg px-3 py-2 text-xs text-[#2C1A0E] focus:outline-none focus:border-[#7A5C3A]" />
-            @error('durasi_menit') <p class="text-red-700 text-xs mt-1">{{ $message }}</p> @enderror
-        </div>
-        <div>
-            <label class="text-[10px] text-[#7A6050] font-medium mb-1 block">Passing Grade / KKM (0-100) *</label>
-            <input type="number" name="passing_grade" value="{{ old('passing_grade', 75) }}" min="0" max="100" required
-                class="w-full bg-[#F7F3EC] border @error('passing_grade') border-red-500 @else border-[#D4C5A9] @enderror rounded-lg px-3 py-2 text-xs text-[#2C1A0E] focus:outline-none focus:border-[#7A5C3A]" />
-            @error('passing_grade') <p class="text-red-700 text-xs mt-1">{{ $message }}</p> @enderror
-        </div>
-    </div>
-
-    <button type="submit" class="text-xs font-semibold bg-[#7A5C3A] text-[#FAF7F2] px-4 py-2 rounded-lg hover:bg-[#5A3E28] transition-colors">+ Simpan Kuis Baru</button>
-</form>
-
-<!-- 2. Form Tambah Butir Soal (Pilihan Ganda atau Teks/Esai) -->
-<form action="{{ route('guru.soal.store') }}" method="POST" class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl p-5 mb-6 shadow-sm">
-    @csrf
-    <p class="text-xs font-semibold text-[#A67C52] uppercase tracking-widest mb-3">2. Tambah Butir Pertanyaan (Pilihan Ganda / Teks)</p>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
-        <div>
-            <label class="text-[10px] text-[#7A6050] font-medium mb-1 block">Pilih Kuis Tujuan *</label>
-            <select name="kuis_id" required class="w-full bg-[#F7F3EC] border border-[#D4C5A9] rounded-lg px-3 py-2 text-xs text-[#2C1A0E] focus:outline-none focus:border-[#7A5C3A]">
-                <option value="">-- Pilih Kuis --</option>
-                @if(isset($kuisList))
-                    @foreach($kuisList as $k)
-                        <option value="{{ $k->id }}">{{ $k->judul }} (Kelas: {{ $k->kelas->nama_kelas ?? 'Umum' }})</option>
-                    @endforeach
-                @endif
-            </select>
-        </div>
-        <div>
-            <label class="text-[10px] text-[#7A6050] font-medium mb-1 block">Tipe Soal *</label>
-            <select name="tipe" id="tipe-soal-select" onchange="toggleTipeSoal(this.value)" class="w-full bg-[#F7F3EC] border border-[#D4C5A9] rounded-lg px-3 py-2 text-xs text-[#2C1A0E] focus:outline-none focus:border-[#7A5C3A]">
-                <option value="pilihan_ganda">Pilihan Ganda (A, B, C, D)</option>
-                <option value="esai">Teks Biasa / Esai</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <label class="text-[10px] text-[#7A6050] font-medium mb-1 block">Teks Pertanyaan / Soal *</label>
-        <textarea name="pertanyaan" rows="2" required placeholder="Tuliskan pertanyaan soal di sini..."
-            class="w-full bg-[#F7F3EC] border border-[#D4C5A9] rounded-lg px-4 py-2.5 text-sm text-[#2C1A0E] resize-none focus:outline-none focus:border-[#7A5C3A]"></textarea>
-    </div>
-
-    <!-- Opsi Pilihan Ganda -->
-    <div id="section-opsi-pg" class="space-y-2 mb-4 bg-[#F7F3EC]/70 p-3 rounded-lg border border-[#D4C5A9]">
-        <p class="text-[10px] font-semibold text-[#7A6050]">Pilihan Jawaban & Kunci:</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-            <div class="flex items-center gap-2">
-                <span class="text-xs font-bold text-[#7A5C3A] w-4">A.</span>
-                <input type="text" name="opsi_a" placeholder="Pilihan A" class="flex-1 bg-white border border-[#D4C5A9] rounded-md px-3 py-1.5 text-xs text-[#2C1A0E]" />
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+            <div>
+                <label class="block text-xs font-medium text-[#4A2E1A] mb-1.5">Kelas <span class="text-red-500">*</span></label>
+                <select name="kelas_id" required class="form-input @error('kelas_id') border-red-400 @enderror">
+                    <option value="">— Pilih Kelas —</option>
+                    @if(isset($kelasList))
+                        @foreach($kelasList as $k)
+                            <option value="{{ $k->id }}" {{ old('kelas_id') == $k->id ? 'selected' : '' }}>
+                                {{ $k->nama_kelas }}
+                            </option>
+                        @endforeach
+                    @endif
+                </select>
+                @error('kelas_id') <p class="text-red-600 text-[11px] mt-1">{{ $message }}</p> @enderror
             </div>
-            <div class="flex items-center gap-2">
-                <span class="text-xs font-bold text-[#7A5C3A] w-4">B.</span>
-                <input type="text" name="opsi_b" placeholder="Pilihan B" class="flex-1 bg-white border border-[#D4C5A9] rounded-md px-3 py-1.5 text-xs text-[#2C1A0E]" />
+            <div>
+                <label class="block text-xs font-medium text-[#4A2E1A] mb-1.5">Durasi <span class="text-[#A87C52] font-normal">(menit)</span> <span class="text-red-500">*</span></label>
+                <input type="number" name="durasi_menit" value="{{ old('durasi_menit', 30) }}" min="5" max="180" required
+                    class="form-input @error('durasi_menit') border-red-400 @enderror" />
+                @error('durasi_menit') <p class="text-red-600 text-[11px] mt-1">{{ $message }}</p> @enderror
             </div>
-            <div class="flex items-center gap-2">
-                <span class="text-xs font-bold text-[#7A5C3A] w-4">C.</span>
-                <input type="text" name="opsi_c" placeholder="Pilihan C" class="flex-1 bg-white border border-[#D4C5A9] rounded-md px-3 py-1.5 text-xs text-[#2C1A0E]" />
-            </div>
-            <div class="flex items-center gap-2">
-                <span class="text-xs font-bold text-[#7A5C3A] w-4">D.</span>
-                <input type="text" name="opsi_d" placeholder="Pilihan D" class="flex-1 bg-white border border-[#D4C5A9] rounded-md px-3 py-1.5 text-xs text-[#2C1A0E]" />
+            <div>
+                <label class="block text-xs font-medium text-[#4A2E1A] mb-1.5">KKM / Passing Grade <span class="text-red-500">*</span></label>
+                <input type="number" name="passing_grade" value="{{ old('passing_grade', 75) }}" min="0" max="100" required
+                    class="form-input @error('passing_grade') border-red-400 @enderror" />
+                @error('passing_grade') <p class="text-red-600 text-[11px] mt-1">{{ $message }}</p> @enderror
             </div>
         </div>
-        <div class="mt-2 pt-2 border-t border-[#D4C5A9]/50 flex items-center gap-3">
-            <label class="text-[10px] font-semibold text-[#2C1A0E]">Kunci Jawaban Benar:</label>
-            <select name="kunci_jawaban" id="kunci-select" class="bg-white border border-[#D4C5A9] rounded-md px-3 py-1 text-xs text-[#2C1A0E] font-bold">
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-            </select>
+        <button type="submit" class="flex items-center gap-2 bg-[#4A2E1A] text-[#FAF8F4] text-xs font-semibold px-5 py-2.5 rounded-lg hover:bg-[#241508] transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Buat Kuis
+        </button>
+    </form>
+</div>
+
+<!-- Form Tambah Butir Soal -->
+<div class="bg-white border border-[#E6D9C6] rounded-xl p-5 mb-6">
+    <p class="text-[11px] font-semibold text-[#A87C52] uppercase tracking-widest mb-4">2. Tambah Butir Soal</p>
+    <form action="{{ route('guru.soal.store') }}" method="POST">
+        @csrf
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div>
+                <label class="block text-xs font-medium text-[#4A2E1A] mb-1.5">Kuis Tujuan <span class="text-red-500">*</span></label>
+                <select name="kuis_id" required class="form-input">
+                    <option value="">— Pilih Kuis —</option>
+                    @if(isset($kuisList))
+                        @foreach($kuisList as $k)
+                            <option value="{{ $k->id }}">{{ $k->judul }} · {{ $k->kelas->nama_kelas ?? 'Umum' }}</option>
+                        @endforeach
+                    @endif
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-[#4A2E1A] mb-1.5">Tipe Soal <span class="text-red-500">*</span></label>
+                <select name="tipe" id="tipe-soal-select" onchange="toggleTipeSoal(this.value)" class="form-input">
+                    <option value="pilihan_ganda">Pilihan Ganda (A, B, C, D)</option>
+                    <option value="esai">Teks / Esai</option>
+                </select>
+            </div>
         </div>
-    </div>
 
-    <!-- Opsi Jawaban Esai / Teks -->
-    <div id="section-opsi-esai" class="hidden mb-4 bg-[#F7F3EC]/70 p-3 rounded-lg border border-[#D4C5A9]">
-        <label class="text-[10px] font-semibold text-[#7A6050] mb-1 block">Pedoman Jawaban Benar / Kata Kunci:</label>
-        <input type="text" name="kunci_jawaban_esai" id="kunci-esai" placeholder="Contoh: integral tertentu menghasilkan nilai konstan / numerik" 
-            class="w-full bg-white border border-[#D4C5A9] rounded-md px-3 py-1.5 text-xs text-[#2C1A0E]" />
-    </div>
+        <div class="mb-4">
+            <label class="block text-xs font-medium text-[#4A2E1A] mb-1.5">Pertanyaan <span class="text-red-500">*</span></label>
+            <textarea name="pertanyaan" rows="2" required placeholder="Tuliskan pertanyaan soal di sini..."
+                class="form-input resize-none"></textarea>
+        </div>
 
-    <button type="submit" class="text-xs font-semibold bg-[#7A5C3A] text-[#FAF7F2] px-4 py-2 rounded-lg hover:bg-[#5A3E28] transition-colors shadow-sm">+ Tambahkan Soal ke Kuis</button>
-</form>
+        <!-- Opsi Pilihan Ganda -->
+        <div id="section-opsi-pg" class="mb-4 bg-[#FAF8F4] border border-[#F3EDE2] rounded-xl p-4 space-y-3">
+            <p class="text-[11px] font-semibold text-[#4A2E1A] uppercase tracking-wider">Pilihan Jawaban</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                @foreach(['a' => 'A', 'b' => 'B', 'c' => 'C', 'd' => 'D'] as $key => $label)
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-[#6E4A2E] w-5 shrink-0">{{ $label }}.</span>
+                        <input type="text" name="opsi_{{ $key }}" placeholder="Pilihan {{ $label }}"
+                            class="flex-1 bg-white border border-[#E6D9C6] rounded-lg px-3 py-1.5 text-xs text-[#241508] focus:outline-none focus:border-[#8B6340]" />
+                    </div>
+                @endforeach
+            </div>
+            <div class="flex items-center gap-3 pt-2 border-t border-[#F3EDE2]">
+                <label class="text-[11px] font-semibold text-[#4A2E1A]">Kunci Jawaban:</label>
+                <select name="kunci_jawaban" id="kunci-select" class="bg-white border border-[#E6D9C6] rounded-lg px-3 py-1.5 text-xs font-bold text-[#241508] focus:outline-none focus:border-[#8B6340]">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Opsi Esai -->
+        <div id="section-opsi-esai" class="hidden mb-4 bg-[#FAF8F4] border border-[#F3EDE2] rounded-xl p-4">
+            <label class="block text-[11px] font-semibold text-[#4A2E1A] mb-1.5">Pedoman Jawaban / Kata Kunci</label>
+            <input type="text" name="kunci_jawaban_esai" id="kunci-esai" placeholder="cth: bilangan prima adalah bilangan yang hanya habis dibagi 1 dan dirinya sendiri"
+                class="w-full bg-white border border-[#E6D9C6] rounded-lg px-3 py-2 text-xs text-[#241508] focus:outline-none focus:border-[#8B6340]" />
+        </div>
+
+        <button type="submit" class="flex items-center gap-2 bg-[#4A2E1A] text-[#FAF8F4] text-xs font-semibold px-5 py-2.5 rounded-lg hover:bg-[#241508] transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Tambahkan Soal
+        </button>
+    </form>
+</div>
 
 <script>
 function toggleTipeSoal(tipe) {
@@ -120,17 +123,12 @@ function toggleTipeSoal(tipe) {
     const esai = document.getElementById('section-opsi-esai');
     const kunciSelect = document.getElementById('kunci-select');
     const kunciEsai = document.getElementById('kunci-esai');
-    
     if (tipe === 'pilihan_ganda') {
-        pg.classList.remove('hidden');
-        esai.classList.add('hidden');
-        kunciSelect.name = 'kunci_jawaban';
-        kunciEsai.removeAttribute('name');
+        pg.classList.remove('hidden'); esai.classList.add('hidden');
+        kunciSelect.name = 'kunci_jawaban'; kunciEsai.removeAttribute('name');
     } else {
-        pg.classList.add('hidden');
-        esai.classList.remove('hidden');
-        kunciSelect.removeAttribute('name');
-        kunciEsai.name = 'kunci_jawaban';
+        pg.classList.add('hidden'); esai.classList.remove('hidden');
+        kunciSelect.removeAttribute('name'); kunciEsai.name = 'kunci_jawaban';
     }
 }
 </script>

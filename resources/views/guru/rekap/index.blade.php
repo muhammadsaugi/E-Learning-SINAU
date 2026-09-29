@@ -1,55 +1,50 @@
-<!-- ─── TAB REKAP NILAI ─── -->
-<div id="tab-nilai" class="tab-content active">
-    <h2 class="font-serif text-xl font-semibold text-[#2C1A0E] mb-4">Rekap Nilai Siswa</h2>
-    <div class="bg-[#EDE5D8] border border-[#D4C5A9] rounded-xl overflow-hidden">
-        <div class="grid grid-cols-12 px-5 py-3 bg-[#D4C5A9]/50 border-b border-[#D4C5A9]">
-            <span class="col-span-4 text-xs font-semibold text-[#7A6050] uppercase tracking-wider">Siswa</span>
-            <span class="col-span-2 text-xs font-semibold text-[#7A6050] uppercase tracking-wider text-center">Kuis</span>
-            <span class="col-span-3 text-xs font-semibold text-[#7A6050] uppercase tracking-wider text-center">Rata-rata</span>
-            <span class="col-span-1 text-xs font-semibold text-[#7A6050] uppercase tracking-wider text-center">Grade</span>
-            <span class="col-span-2 text-xs font-semibold text-[#7A6050] uppercase tracking-wider text-right">Detail</span>
+<!-- ─── TAB REKAP NILAI GURU ─── -->
+<div id="tab-nilai" class="tab-content">
+    <div class="mb-6">
+        <h1 class="font-display text-2xl text-[#241508]">Rekap Nilai Siswa</h1>
+        <p class="text-sm text-[#8B6340] mt-0.5">Pantau performa nilai seluruh siswa.</p>
+    </div>
+    <div class="bg-white border border-[#E6D9C6] rounded-xl overflow-hidden">
+        <!-- Header Tabel -->
+        <div class="grid grid-cols-12 px-5 py-3 bg-[#FAF8F4] border-b border-[#F3EDE2]">
+            <span class="col-span-4 text-[10px] font-semibold uppercase tracking-wider text-[#8B6340]">Siswa</span>
+            <span class="col-span-2 text-[10px] font-semibold uppercase tracking-wider text-[#8B6340] text-center">Kuis</span>
+            <span class="col-span-3 text-[10px] font-semibold uppercase tracking-wider text-[#8B6340] text-center">Rata-rata</span>
+            <span class="col-span-1 text-[10px] font-semibold uppercase tracking-wider text-[#8B6340] text-center">Grade</span>
+            <span class="col-span-2 text-[10px] font-semibold uppercase tracking-wider text-[#8B6340] text-right">Edit</span>
         </div>
 
-        <div class="grid grid-cols-12 px-5 py-3.5 items-center border-b border-[#D4C5A9] cursor-pointer hover:bg-[#D4C5A9]/30 transition-colors">
-            <div class="col-span-4 flex items-center gap-2.5">
-                <div class="w-7 h-7 rounded-full bg-[#C4A882] flex items-center justify-center text-[#2C1A0E] text-[10px] font-semibold shrink-0">AK</div>
-                <p class="text-sm font-medium text-[#2C1A0E]">Arini Kusuma</p>
-            </div>
-            <div class="col-span-2 text-center text-xs text-[#2C1A0E]">3/3</div>
-            <div class="col-span-3 flex flex-col items-center gap-1">
-                <span class="text-sm font-bold text-[#2C1A0E]">92</span>
-                <div class="w-14 h-1.5 bg-[#D4C5A9] rounded-full"><div class="h-full bg-[#7A5C3A] rounded-full" style="width:92%"></div></div>
-            </div>
-            <div class="col-span-1 flex justify-center"><span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#7A5C3A]/15 text-[#7A5C3A]">A</span></div>
-            <div class="col-span-2 flex justify-end text-xs text-[#A67C52]">▼</div>
-        </div>
+        @php
+        $siswaData = [
+            ['init' => 'AK', 'nama' => 'Arini Kusuma', 'kuis' => '3/3', 'skor' => 92, 'grade' => 'A'],
+            ['init' => 'BP', 'nama' => 'Bagas Pratama', 'kuis' => '2/3', 'skor' => 75, 'grade' => 'B'],
+            ['init' => 'CM', 'nama' => 'Citra Maharani', 'kuis' => '3/3', 'skor' => 88, 'grade' => 'A'],
+        ];
+        @endphp
 
-        <div class="grid grid-cols-12 px-5 py-3.5 items-center border-b border-[#D4C5A9] cursor-pointer hover:bg-[#D4C5A9]/30 transition-colors">
-            <div class="col-span-4 flex items-center gap-2.5">
-                <div class="w-7 h-7 rounded-full bg-[#C4A882] flex items-center justify-center text-[#2C1A0E] text-[10px] font-semibold shrink-0">BP</div>
-                <p class="text-sm font-medium text-[#2C1A0E]">Bagas Pratama</p>
+        @foreach($siswaData as $idx => $s)
+            <div class="grid grid-cols-12 px-5 py-4 items-center {{ $idx < count($siswaData)-1 ? 'border-b border-[#FAF8F4]' : '' }} hover:bg-[#FAF8F4] transition-colors">
+                <div class="col-span-4 flex items-center gap-2.5">
+                    <div class="w-7 h-7 rounded-full bg-[#D4C0A0] flex items-center justify-center text-[#4A2E1A] text-[9px] font-semibold shrink-0">{{ $s['init'] }}</div>
+                    <p class="text-sm font-medium text-[#241508]">{{ $s['nama'] }}</p>
+                </div>
+                <div class="col-span-2 text-center text-[11px] text-[#8B6340]">{{ $s['kuis'] }}</div>
+                <div class="col-span-3 flex flex-col items-center gap-1.5">
+                    <span class="text-sm font-bold text-[#241508]">{{ $s['skor'] }}</span>
+                    <div class="w-16 progress-bar">
+                        <div class="progress-fill" style="width:{{ $s['skor'] }}%"></div>
+                    </div>
+                </div>
+                <div class="col-span-1 flex justify-center">
+                    <span class="badge-grade badge-{{ strtolower($s['grade']) }}">{{ $s['grade'] }}</span>
+                </div>
+                <div class="col-span-2 flex justify-end">
+                    <div class="flex items-center gap-2">
+                        <input type="number" class="w-16 bg-[#FAF8F4] border border-[#E6D9C6] rounded-lg px-2 py-1 text-xs text-center focus:outline-none focus:border-[#8B6340]" placeholder="{{ $s['skor'] }}" />
+                        <button onclick="simpanNilai(this.previousElementSibling)" class="text-[10px] font-semibold bg-[#4A2E1A] text-[#FAF8F4] px-2 py-1 rounded-lg">OK</button>
+                    </div>
+                </div>
             </div>
-            <div class="col-span-2 text-center text-xs text-[#2C1A0E]">2/3</div>
-            <div class="col-span-3 flex flex-col items-center gap-1">
-                <span class="text-sm font-bold text-[#2C1A0E]">75</span>
-                <div class="w-14 h-1.5 bg-[#D4C5A9] rounded-full"><div class="h-full bg-[#7A5C3A] rounded-full" style="width:75%"></div></div>
-            </div>
-            <div class="col-span-1 flex justify-center"><span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#C4A882]/40 text-[#5A3E28]">B</span></div>
-            <div class="col-span-2 flex justify-end text-xs text-[#A67C52]">▼</div>
-        </div>
-
-        <div class="grid grid-cols-12 px-5 py-3.5 items-center cursor-pointer hover:bg-[#D4C5A9]/30 transition-colors">
-            <div class="col-span-4 flex items-center gap-2.5">
-                <div class="w-7 h-7 rounded-full bg-[#C4A882] flex items-center justify-center text-[#2C1A0E] text-[10px] font-semibold shrink-0">CM</div>
-                <p class="text-sm font-medium text-[#2C1A0E]">Citra Maharani</p>
-            </div>
-            <div class="col-span-2 text-center text-xs text-[#2C1A0E]">3/3</div>
-            <div class="col-span-3 flex flex-col items-center gap-1">
-                <span class="text-sm font-bold text-[#2C1A0E]">88</span>
-                <div class="w-14 h-1.5 bg-[#D4C5A9] rounded-full"><div class="h-full bg-[#7A5C3A] rounded-full" style="width:88%"></div></div>
-            </div>
-            <div class="col-span-1 flex justify-center"><span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#7A5C3A]/15 text-[#7A5C3A]">A</span></div>
-            <div class="col-span-2 flex justify-end text-xs text-[#A67C52]">▼</div>
-        </div>
+        @endforeach
     </div>
 </div>
