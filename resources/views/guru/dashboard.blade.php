@@ -3,19 +3,14 @@
 @section('title', 'SINAU — Guru')
 
 @section('content')
-<div class="flex flex-col h-screen overflow-hidden">
+<div class="flex h-screen overflow-hidden">
 
-    <!-- Topbar -->
-    @include('partials.topbar', ['roleTitle' => 'Guru'])
+    <!-- Sidebar Guru -->
+    @include('partials.sidebar-guru')
 
-    <div class="flex flex-1 overflow-hidden">
-
-        <!-- Sidebar Guru -->
-        @include('partials.sidebar-guru')
-
-        <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto" style="background: #EDE5D8;">
-            <div class="max-w-3xl mx-auto px-7 py-7">
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto" style="background: #EDE5D8;">
+        <div class="max-w-3xl mx-auto px-7 py-7">
 
                 <!-- Stats Cards -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-7">
@@ -78,7 +73,6 @@
 
             </div>
         </main>
-    </div>
 </div>
 @endsection
 
@@ -97,7 +91,7 @@
             const btn = document.getElementById('gnav-' + id);
             if (!btn) return;
             btn.classList.remove('nav-active');
-            btn.classList.add('text-[#5A3E28]');
+            btn.classList.add('text-[#C4A882]');
         });
 
         const activeContent = document.getElementById('tab-' + tab);
@@ -106,7 +100,7 @@
         const activeNav = document.getElementById('gnav-' + tab);
         if (activeNav) {
             activeNav.classList.add('nav-active');
-            activeNav.classList.remove('text-[#5A3E28]');
+            activeNav.classList.remove('text-[#C4A882]');
         }
     }
 

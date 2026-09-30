@@ -42,14 +42,14 @@
             const btn = document.getElementById('nav-' + id);
             if (!btn) return;
             btn.classList.remove('nav-active');
-            btn.classList.add('text-[#5A3E28]');
+            btn.classList.add('text-[#C4A882]');
         });
 
         const target = document.getElementById('tab-' + tab);
         if (target) target.classList.add('active');
 
         const nav = document.getElementById('nav-' + tab);
-        if (nav) { nav.classList.add('nav-active'); nav.classList.remove('text-[#5A3E28]'); }
+        if (nav) { nav.classList.add('nav-active'); nav.classList.remove('text-[#C4A882]'); }
     }
 
     document.addEventListener('DOMContentLoaded', () => {

@@ -1,5 +1,5 @@
 <!-- Sidebar Admin -->
-<aside class="w-56 shrink-0 bg-[#241508] flex flex-col min-h-full">
+<aside class="w-56 shrink-0 flex flex-col min-h-screen" style="background:#241508; border-right:1px solid #3D2211;">
     <!-- Brand -->
     <div class="px-5 py-5 border-b border-[#3D2211]">
         <div class="flex items-center gap-2.5">

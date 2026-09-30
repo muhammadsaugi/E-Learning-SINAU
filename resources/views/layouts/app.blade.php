@@ -45,13 +45,15 @@
             transition: background 0.15s ease, color 0.15s ease;
         }
         .nav-item:not(.nav-active):hover {
-            background: rgba(212, 192, 160, 0.5);
+            background: #3D2211 !important;
+            color: #FAF8F4 !important;
         }
         .nav-active {
-            background: var(--brown-700) !important;
-            color: var(--cream-50) !important;
+            background: #4A2E1A !important;
+            color: #FAF8F4 !important;
+            border: 1px solid #6E4A2E !important;
         }
-        .nav-active svg { opacity: 1 !important; }
+        .nav-active svg { opacity: 1 !important; color: #FAF8F4 !important; }
 
         /* Scrollbar */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
