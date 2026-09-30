@@ -15,9 +15,9 @@
 
     <style>
         :root {
-            --cream-50: #FAF8F4;
+            --cream-50:  #FAF8F4;
             --cream-100: #F3EDE2;
-            --cream-200: #E6D9C6;
+            --cream-200: #EDE5D8;
             --cream-300: #D4C0A0;
             --brown-400: #A87C52;
             --brown-500: #8B6340;
@@ -27,10 +27,15 @@
         }
 
         * { box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--cream-50); color: var(--brown-700); }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream-200);
+            color: var(--brown-700);
+        }
         .font-display { font-family: 'DM Serif Display', serif; }
         html, body { height: 100%; margin: 0; }
 
+        /* Tab system */
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
@@ -40,13 +45,13 @@
             transition: background 0.15s ease, color 0.15s ease;
         }
         .nav-item:not(.nav-active):hover {
-            background: var(--cream-200);
+            background: rgba(212, 192, 160, 0.5);
         }
         .nav-active {
             background: var(--brown-700) !important;
             color: var(--cream-50) !important;
         }
-        .nav-active svg { color: var(--cream-50) !important; opacity: 1; }
+        .nav-active svg { opacity: 1 !important; }
 
         /* Scrollbar */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -64,31 +69,33 @@
 
         /* Card hover */
         .data-card {
-            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+            transition: box-shadow 0.2s ease, transform 0.15s ease;
         }
         .data-card:hover {
-            box-shadow: 0 4px 16px rgba(74, 46, 26, 0.08);
-            border-color: var(--cream-300);
+            box-shadow: 0 4px 16px rgba(74, 46, 26, 0.1);
+            transform: translateY(-1px);
         }
 
-        /* Input style */
+        /* Form inputs */
         .form-input {
             background: var(--cream-50);
-            border: 1.5px solid var(--cream-200);
+            border: 1.5px solid var(--cream-300);
             border-radius: 10px;
-            padding: 8px 14px;
+            padding: 9px 14px;
             font-size: 13px;
             color: var(--brown-700);
             transition: border-color 0.15s;
             width: 100%;
+            font-family: 'Inter', sans-serif;
         }
         .form-input:focus {
             outline: none;
             border-color: var(--brown-500);
+            background: white;
         }
         .form-input::placeholder { color: var(--brown-400); opacity: 0.7; }
 
-        /* Badge grade */
+        /* Grade badges */
         .badge-grade {
             font-size: 10px;
             font-weight: 700;
@@ -101,7 +108,7 @@
         .badge-c { background: #fff8e1; color: #f57f17; }
         .badge-d { background: #fce4ec; color: #c62828; }
 
-        /* Pill */
+        /* Status pills */
         .pill-lulus { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
         .pill-gagal { background: #fce4ec; color: #c62828; border: 1px solid #ef9a9a; }
 
@@ -109,7 +116,7 @@
         .progress-bar {
             height: 4px;
             border-radius: 99px;
-            background: var(--cream-200);
+            background: var(--cream-300);
             overflow: hidden;
         }
         .progress-fill {
@@ -117,6 +124,28 @@
             border-radius: 99px;
             background: var(--brown-600);
             transition: width 0.6s ease;
+        }
+
+        /* Section panel - bg utama konten */
+        main {
+            background: var(--cream-200) !important;
+        }
+
+        /* Content panel dalam main */
+        .content-panel {
+            background: var(--cream-50);
+            border: 1px solid var(--cream-300);
+            border-radius: 14px;
+        }
+
+        /* Stat card accent variants */
+        .stat-accent {
+            background: var(--brown-700);
+            color: var(--cream-50);
+        }
+        .stat-warm {
+            background: var(--cream-100);
+            border: 1px solid var(--cream-300);
         }
     </style>
 </head>

@@ -12,7 +12,7 @@
     @include('partials.sidebar-admin')
 
     <!-- Konten Utama Admin -->
-    <main class="flex-1 overflow-y-auto">
+    <main class="flex-1 overflow-y-auto" style="background:#EDE5D8;">
         <div class="max-w-4xl mx-auto px-8 py-8">
 
             <!-- 1. Modul Aktivitas & Stats -->

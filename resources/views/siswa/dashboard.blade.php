@@ -9,7 +9,7 @@
     @include('partials.sidebar-siswa')
 
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto bg-[#FAF8F4]">
+    <main class="flex-1 overflow-y-auto" style="background: #EDE5D8;">
 
         <!-- Tab: Kelas Aktif -->
         @include('siswa.kelas.index')
@@ -42,14 +42,14 @@
             const btn = document.getElementById('nav-' + id);
             if (!btn) return;
             btn.classList.remove('nav-active');
-            btn.classList.add('text-[#6E4A2E]');
+            btn.classList.add('text-[#5A3E28]');
         });
 
         const target = document.getElementById('tab-' + tab);
         if (target) target.classList.add('active');
 
         const nav = document.getElementById('nav-' + tab);
-        if (nav) { nav.classList.add('nav-active'); nav.classList.remove('text-[#6E4A2E]'); }
+        if (nav) { nav.classList.add('nav-active'); nav.classList.remove('text-[#5A3E28]'); }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -63,13 +63,13 @@
         const isDone = btn.dataset.done === '1';
         if (isDone) {
             btn.textContent = 'Tandai Selesai';
-            btn.classList.replace('bg-[#E6D9C6]', 'bg-[#4A2E1A]');
-            btn.classList.replace('text-[#6E4A2E]', 'text-[#FAF8F4]');
+            btn.classList.replace('bg-[#D4C0A0]','bg-[#4A2E1A]');
+            btn.classList.replace('text-[#5A3E28]','text-[#FAF8F4]');
             btn.dataset.done = '0';
         } else {
             btn.textContent = 'Selesai';
-            btn.classList.replace('bg-[#4A2E1A]', 'bg-[#E6D9C6]');
-            btn.classList.replace('text-[#FAF8F4]', 'text-[#6E4A2E]');
+            btn.classList.replace('bg-[#4A2E1A]','bg-[#D4C0A0]');
+            btn.classList.replace('text-[#FAF8F4]','text-[#5A3E28]');
             btn.dataset.done = '1';
         }
     }
@@ -82,8 +82,8 @@
         const div = document.createElement('div');
         div.className = 'flex gap-3';
         const initials = '{{ strtoupper(substr(Auth::user()->name ?? "S", 0, 2)) }}';
-        div.innerHTML = `<div class="w-8 h-8 rounded-full bg-[#D4C0A0] flex items-center justify-center text-[#4A2E1A] font-semibold text-xs shrink-0 mt-0.5">${initials}</div>
-            <div class="flex-1"><div class="bg-white border border-[#E6D9C6] rounded-xl px-4 py-3">
+        div.innerHTML = `<div class="w-8 h-8 rounded-full bg-[#C4A882] flex items-center justify-center text-[#4A2E1A] font-semibold text-xs shrink-0 mt-0.5">${initials}</div>
+            <div class="flex-1"><div class="bg-[#F3EDE2] border border-[#D4C0A0] rounded-xl px-4 py-3">
                 <div class="flex items-center justify-between mb-1"><span class="text-sm font-semibold text-[#241508]">{{ Auth::user()->name ?? 'Siswa' }}</span><span class="text-xs text-[#A87C52]">Baru saja</span></div>
                 <p class="text-sm text-[#4A2E1A]">${text}</p></div></div>`;
         document.getElementById('comment-list')?.prepend(div);
