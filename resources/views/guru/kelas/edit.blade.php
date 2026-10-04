@@ -1,65 +1,102 @@
-<!-- Modal Edit Kelas -->
-<div id="modal-edit-kelas" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] hidden">
-    <div class="bg-white border border-[#E6D9C6] rounded-2xl p-6 w-full max-w-lg shadow-2xl mx-4">
-        <div class="flex items-center justify-between pb-4 border-b border-[#F3EDE2] mb-5">
-            <div>
-                <h3 class="font-display text-lg text-[#241508]">Edit Kelas</h3>
-                <p class="text-xs text-[#8B6340] mt-0.5">Perbarui informasi kelas yang dipilih.</p>
+@extends('layouts.app')
+
+@section('title', 'SINAU — Edit Kelas: ' . $kelas->nama_kelas)
+
+@section('content')
+<div class="flex h-screen overflow-hidden">
+    <!-- Sidebar Guru -->
+    @include('partials.sidebar-guru')
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto" style="background: #EDE5D8;">
+        <div class="max-w-3xl mx-auto px-7 py-7">
+
+            <!-- Breadcrumb -->
+            <div class="flex items-center gap-2 text-xs text-[#8B6340] mb-4">
+                <a href="{{ route('kelas.index') }}" class="hover:underline">Kelola Kelas</a>
+                <span>/</span>
+                <span class="text-[#241508] font-semibold">Edit Kelas</span>
             </div>
-            <button type="button" onclick="tutupModalEditKelas()" class="w-8 h-8 flex items-center justify-center rounded-lg text-[#A87C52] hover:text-[#241508] hover:bg-[#F3EDE2] transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-                </svg>
-            </button>
+
+            <!-- Card Form Edit Kelas -->
+            <div class="rounded-2xl shadow-xl overflow-hidden border border-[#D4C0A0]" style="background:#FAF8F4;">
+                <!-- Header Card -->
+                <div class="flex items-center justify-between px-6 py-5" style="background:#6E4A2E;">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center text-[#FAF8F4]" style="background:#4A2E1A;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="font-display text-lg text-[#FAF8F4]">Edit Kelas: {{ $kelas->nama_kelas }}</h1>
+                            <p class="text-xs text-[#D4C0A0] mt-0.5">Kode Kelas: <span class="font-mono font-semibold">{{ $kelas->kode_kelas }}</span></p>
+                        </div>
+                    </div>
+                    <a href="{{ route('kelas.index') }}" class="text-xs text-[#D4C0A0] hover:text-[#FAF8F4] px-3 py-1.5 rounded-lg transition-colors" style="background:rgba(255,255,255,0.1);">
+                        &larr; Kembali
+                    </a>
+                </div>
+
+                <!-- Form Body -->
+                <form action="{{ route('kelas.update', $kelas->id) }}" method="POST" class="p-6 space-y-5">
+                    @csrf
+                    @method('PUT')
+
+                    <div>
+                        <label class="block text-xs font-semibold text-[#4A2E1A] mb-1.5">
+                            Nama Kelas <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" name="nama_kelas" value="{{ old('nama_kelas', $kelas->nama_kelas) }}" required
+                            class="form-input @error('nama_kelas') border-red-400 @enderror" />
+                        @error('nama_kelas')
+                            <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-[#4A2E1A] mb-1.5">
+                            Mata Pelajaran <span class="text-red-500">*</span>
+                        </label>
+                        <select name="mata_pelajaran" required class="form-input @error('mata_pelajaran') border-red-400 @enderror">
+                            @foreach(['Matematika','Biologi','Fisika','Kimia','Bahasa Indonesia','Bahasa Inggris','Sejarah','Geografi','Ekonomi','Sosiologi','Informatika','Seni Budaya','PJOK','PPKn','Prakarya','Bahasa Asing'] as $mp)
+                                <option value="{{ $mp }}" {{ old('mata_pelajaran', $kelas->mata_pelajaran) == $mp ? 'selected' : '' }}>
+                                    {{ $mp }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('mata_pelajaran')
+                            <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-[#4A2E1A] mb-1.5">
+                            Deskripsi / Jadwal <span class="text-[#8B6340] font-normal">(opsional)</span>
+                        </label>
+                        <textarea name="deskripsi" rows="3"
+                            class="form-input resize-none">{{ old('deskripsi', $kelas->deskripsi) }}</textarea>
+                        @error('deskripsi')
+                            <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Footer Action Buttons -->
+                    <div class="flex items-center justify-end gap-3 pt-4 border-t border-[#E6D9C6]">
+                        <a href="{{ route('kelas.index') }}" class="text-xs font-medium px-4 py-2.5 rounded-lg transition-colors" style="color:#6E4A2E; background:#EDE5D8; border:1px solid #D4C0A0;">
+                            Batal
+                        </a>
+                        <button type="submit" class="flex items-center gap-2 text-xs font-semibold px-5 py-2.5 rounded-lg transition-colors cursor-pointer" style="background:#4A2E1A; color:#FAF8F4;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Perbarui Kelas
+                        </button>
+                    </div>
+                </form>
+            </div>
+
         </div>
-
-        <form id="form-edit-kelas" method="POST" class="space-y-4">
-            @csrf
-            @method('PUT')
-
-            <div>
-                <label class="block text-xs font-medium text-[#4A2E1A] mb-1.5">Nama Kelas <span class="text-red-500">*</span></label>
-                <input type="text" id="edit-nama-kelas" name="nama_kelas" required class="form-input" />
-            </div>
-
-            <div>
-                <label class="block text-xs font-medium text-[#4A2E1A] mb-1.5">Mata Pelajaran <span class="text-red-500">*</span></label>
-                <select id="edit-mata-pelajaran" name="mata_pelajaran" required class="form-input">
-                    @foreach(['Matematika','Biologi','Fisika','Kimia','Bahasa Indonesia','Bahasa Inggris','Sejarah','Geografi','Ekonomi','Sosiologi','Informatika','Seni Budaya','PJOK','PPKn','Prakarya','Bahasa Asing'] as $mp)
-                        <option value="{{ $mp }}">{{ $mp }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div>
-                <label class="block text-xs font-medium text-[#4A2E1A] mb-1.5">Deskripsi / Jadwal <span class="text-[#A87C52] font-normal">(opsional)</span></label>
-                <textarea id="edit-deskripsi" name="deskripsi" rows="2" class="form-input resize-none"></textarea>
-            </div>
-
-            <div class="pt-4 border-t border-[#F3EDE2] flex items-center justify-end gap-2">
-                <button type="button" onclick="tutupModalEditKelas()" class="text-xs text-[#8B6340] hover:text-[#4A2E1A] px-4 py-2 rounded-lg transition-colors">
-                    Batal
-                </button>
-                <button type="submit" class="flex items-center gap-2 bg-[#4A2E1A] text-[#FAF8F4] text-xs font-semibold px-5 py-2.5 rounded-lg hover:bg-[#241508] transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="20 6 9 17 4 12"/>
-                    </svg>
-                    Simpan Perubahan
-                </button>
-            </div>
-        </form>
-    </div>
+    </main>
 </div>
-
-<script>
-function bukaModalEditKelas(kelas) {
-    document.getElementById('form-edit-kelas').action = `/guru/kelas/${kelas.id}`;
-    document.getElementById('edit-nama-kelas').value = kelas.nama_kelas || '';
-    document.getElementById('edit-mata-pelajaran').value = kelas.mata_pelajaran || '';
-    document.getElementById('edit-deskripsi').value = kelas.deskripsi || '';
-    document.getElementById('modal-edit-kelas').classList.remove('hidden');
-}
-function tutupModalEditKelas() {
-    document.getElementById('modal-edit-kelas').classList.add('hidden');
-}
-</script>
+@endsection

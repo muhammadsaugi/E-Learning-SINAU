@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
 use App\Models\Kuis;
 use App\Models\Soal;
 use Illuminate\Http\Request;
@@ -9,7 +10,31 @@ use Illuminate\Http\Request;
 class KuisController extends Controller
 {
     /**
-     * Menyimpan kuis baru dengan validasi lengkap (Create Data).
+     * 1. INDEX: Menampilkan daftar kuis (Read Data).
+     */
+    public function index(Request $request)
+    {
+        $kelasList = Kelas::all();
+        $kuisList  = Kuis::with(['kelas', 'soal'])->latest()->get();
+
+        if (!$request->wantsJson() && !$request->has('standalone')) {
+            return redirect('/guru#banksoal');
+        }
+
+        return view('guru.kuis.index', compact('kuisList', 'kelasList'));
+    }
+
+    /**
+     * 2. CREATE: Menampilkan halaman formulir buat kuis baru.
+     */
+    public function create()
+    {
+        $kelasList = Kelas::all();
+        return view('guru.kuis.create', compact('kelasList'));
+    }
+
+    /**
+     * 3. STORE: Menyimpan kuis baru dengan validasi lengkap (Create Data).
      */
     public function store(Request $request)
     {
@@ -33,11 +58,30 @@ class KuisController extends Controller
 
         Kuis::create($validated);
 
-        return redirect('/guru#banksoal')->with('success', 'Kuis / Ujian baru berhasil dibuat! Silakan tambahkan butir soal di bawah.');
+        return redirect('/guru#banksoal')->with('success', 'Kuis baru berhasil dibuat! Silakan tambahkan butir soal di bawah.');
     }
 
     /**
-     * Memperbarui informasi kuis (Update Data).
+     * 4. SHOW: Menampilkan detail kuis beserta butir soal (Read by ID).
+     */
+    public function show($id)
+    {
+        $kuis = Kuis::with(['kelas', 'soal'])->findOrFail($id);
+        return view('guru.kuis.show', compact('kuis'));
+    }
+
+    /**
+     * 5. EDIT: Menampilkan halaman formulir edit kuis.
+     */
+    public function edit($id)
+    {
+        $kuis = Kuis::findOrFail($id);
+        $kelasList = Kelas::all();
+        return view('guru.kuis.edit', compact('kuis', 'kelasList'));
+    }
+
+    /**
+     * 6. UPDATE: Memperbarui informasi kuis (Update Data).
      */
     public function update(Request $request, $id)
     {
@@ -62,7 +106,18 @@ class KuisController extends Controller
     }
 
     /**
-     * Menyimpan butir pertanyaan (Pilihan Ganda atau Esai/Teks).
+     * 7. DESTROY: Menghapus kuis beserta seluruh soalnya (Delete Data).
+     */
+    public function destroy($id)
+    {
+        $kuis = Kuis::findOrFail($id);
+        $kuis->delete();
+
+        return redirect('/guru#banksoal')->with('success', 'Kuis berhasil dihapus!');
+    }
+
+    /**
+     * Khusus: Menyimpan butir pertanyaan kuis (Pilihan Ganda atau Esai).
      */
     public function storeSoal(Request $request)
     {
@@ -85,33 +140,22 @@ class KuisController extends Controller
 
         Soal::create($validated);
 
-        return redirect('/guru#banksoal')->with('success', 'Butir soal berhasil ditambahkan ke kuis!');
+        return redirect()->back()->with('success', 'Butir soal berhasil ditambahkan ke kuis!');
     }
 
     /**
-     * Hapus kuis beserta seluruh soalnya (Delete Data).
-     */
-    public function destroy($id)
-    {
-        $kuis = Kuis::findOrFail($id);
-        $kuis->delete();
-
-        return redirect('/guru#banksoal')->with('success', 'Kuis berhasil dihapus!');
-    }
-
-    /**
-     * Hapus butir soal (Delete Data).
+     * Khusus: Hapus butir soal.
      */
     public function destroySoal($id)
     {
         $soal = Soal::findOrFail($id);
         $soal->delete();
 
-        return redirect('/guru#banksoal')->with('success', 'Butir soal berhasil dihapus!');
+        return redirect()->back()->with('success', 'Butir soal berhasil dihapus!');
     }
 
     /**
-     * Menerima dan mengoreksi jawaban kuis dari siswa secara otomatis.
+     * Khusus: Submit jawaban kuis oleh siswa.
      */
     public function submitJawaban(Request $request, $id)
     {
@@ -119,46 +163,27 @@ class KuisController extends Controller
         $jawabanSiswa = $request->input('jawaban', []);
 
         $totalSoal = $kuis->soal->count();
-        if ($totalSoal === 0) {
-            return redirect('/siswa#quiz')->with('error', 'Kuis ini belum memiliki soal untuk dikerjakan.');
-        }
-
         $benar = 0;
-        $totalPG = 0;
 
         foreach ($kuis->soal as $soal) {
             if ($soal->tipe === 'pilihan_ganda') {
-                $totalPG++;
-                $jawaban = isset($jawabanSiswa[$soal->id]) ? strtoupper(trim($jawabanSiswa[$soal->id])) : null;
-                if ($jawaban && $jawaban === strtoupper(trim($soal->kunci_jawaban))) {
-                    $benar++;
-                }
-            } else {
-                if (!empty($jawabanSiswa[$soal->id])) {
+                $jawab = $jawabanSiswa[$soal->id] ?? null;
+                if ($jawab && strtoupper(trim($jawab)) === strtoupper(trim($soal->kunci_jawaban))) {
                     $benar++;
                 }
             }
         }
 
-        $skor = round(($benar / $totalSoal) * 100);
-        $isLulus = $skor >= $kuis->passing_grade;
-        $grade = $skor >= 85 ? 'A' : ($skor >= 70 ? 'B' : ($skor >= 55 ? 'C' : 'D'));
+        $skor = $totalSoal > 0 ? round(($benar / $totalSoal) * 100) : 0;
+        $lulus = $skor >= $kuis->passing_grade;
 
-        $siswa = \App\Models\User::where('role', 'siswa')->first();
-        $siswaId = auth()->id() ?? ($siswa ? $siswa->id : 3);
-
+        $siswaId = auth()->id() ?? 3;
         \App\Models\Nilai::updateOrCreate(
-            ['siswa_id' => $siswaId, 'kuis_id' => $kuis->id],
-            [
-                'nilai'  => $skor,
-                'status' => $isLulus ? 'lulus' : 'tidak_lulus',
-                'grade'  => $grade,
-            ]
+            ['kuis_id' => $kuis->id, 'siswa_id' => $siswaId],
+            ['nilai' => $skor, 'status' => $lulus ? 'lulus' : 'remedial']
         );
 
-        $pesan = "Kuis '{$kuis->judul}' selesai! Skor Anda: {$skor}/100 (Grade {$grade}). " . 
-                 ($isLulus ? "Selamat, Anda LULUS! 🎉" : "Nilai di bawah KKM ({$kuis->passing_grade}).");
-
-        return redirect('/siswa#nilai')->with('success', $pesan);
+        $statusMsg = $lulus ? "Selamat, Anda LULUS!" : "Nilai Anda di bawah KKM ({$kuis->passing_grade}), silakan remedial.";
+        return redirect()->route('siswa')->with('success', "Kuis selesai! Skor Anda: {$skor} / 100. {$statusMsg}");
     }
 }

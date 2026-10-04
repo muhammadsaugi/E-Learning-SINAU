@@ -12,53 +12,7 @@
     <main class="flex-1 overflow-y-auto" style="background: #EDE5D8;">
         <div class="max-w-3xl mx-auto px-7 py-7">
 
-                <!-- Stats Cards -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-7">
-                    <!-- Card 1: Aksen Coklat Gelap -->
-                    <div class="rounded-xl px-4 py-4" style="background:#4A2E1A; color:#FAF8F4;">
-                        <div class="flex items-center justify-between mb-2">
-                            <p class="text-[11px] font-medium opacity-70">Total Siswa</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
-                            </svg>
-                        </div>
-                        <p class="font-display text-2xl">8</p>
-                        <p class="text-[10px] opacity-60 mt-0.5">terdaftar</p>
-                    </div>
-                    <!-- Card 2: Cream sedang -->
-                    <div class="rounded-xl px-4 py-4" style="background:#F3EDE2; border:1px solid #D4C0A0;">
-                        <div class="flex items-center justify-between mb-2">
-                            <p class="text-[11px] font-medium text-[#8B6340]">Rata-rata</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-[#A87C52]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
-                            </svg>
-                        </div>
-                        <p class="font-display text-2xl text-[#241508]">79</p>
-                        <p class="text-[10px] text-[#A87C52] mt-0.5">dari 100</p>
-                    </div>
-                    <!-- Card 3: Cream sedang -->
-                    <div class="rounded-xl px-4 py-4" style="background:#F3EDE2; border:1px solid #D4C0A0;">
-                        <div class="flex items-center justify-between mb-2">
-                            <p class="text-[11px] font-medium text-[#8B6340]">Lulus</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-[#A87C52]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                        </div>
-                        <p class="font-display text-2xl text-[#241508]">6</p>
-                        <p class="text-[10px] text-[#A87C52] mt-0.5">≥ KKM 70</p>
-                    </div>
-                    <!-- Card 4: Aksen medium -->
-                    <div class="rounded-xl px-4 py-4" style="background:#6E4A2E; color:#FAF8F4;">
-                        <div class="flex items-center justify-between mb-2">
-                            <p class="text-[11px] font-medium opacity-70">Kuis Aktif</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9 11l3 3L22 4"/>
-                            </svg>
-                        </div>
-                        <p class="font-display text-2xl">{{ isset($kuisList) ? $kuisList->count() : 3 }}</p>
-                        <p class="text-[10px] opacity-60 mt-0.5">topik</p>
-                    </div>
-                </div>
+
 
                 <!-- Modules (each wrapped in cream card) -->
                 <div style="background:#FAF8F4; border-radius:16px; border:1px solid #D4C0A0; padding:24px; margin-bottom:16px;">

@@ -12,8 +12,8 @@ use Illuminate\Support\Str;
 class KelasController extends Controller
 {
     /**
-     * Tampilkan dashboard guru beserta daftar kelas, materi, dan kuis.
-     * Mendukung fitur Search (Pencarian Data).
+     * 1. INDEX: Menampilkan daftar data kelas (Read Data).
+     * Mendukung pencarian (search) dan memuat ringkasan materi & kuis.
      */
     public function index(Request $request)
     {
@@ -37,7 +37,15 @@ class KelasController extends Controller
     }
 
     /**
-     * Simpan kelas baru dengan validasi data form (Create Data).
+     * 2. CREATE: Menampilkan halaman formulir tambah kelas baru.
+     */
+    public function create()
+    {
+        return view('guru.kelas.create');
+    }
+
+    /**
+     * 3. STORE: Menyimpan data kelas baru ke database (Create Data).
      */
     public function store(Request $request)
     {
@@ -63,11 +71,11 @@ class KelasController extends Controller
             'deskripsi'      => $validated['deskripsi'] ?? null,
         ]);
 
-        return redirect('/guru#kelas')->with('success', 'Kelas baru berhasil dibuat!');
+        return redirect()->route('kelas.index')->with('success', 'Kelas baru berhasil dibuat!');
     }
 
     /**
-     * Tampilkan detail kelas tertentu (Detail Data / Read by ID).
+     * 4. SHOW: Menampilkan detail satu kelas tertentu (Read by ID).
      */
     public function show($id)
     {
@@ -77,11 +85,20 @@ class KelasController extends Controller
             return response()->json($kelas);
         }
 
-        return redirect('/guru#kelas');
+        return view('guru.kelas.show', compact('kelas'));
     }
 
     /**
-     * Perbarui data kelas (Update Data).
+     * 5. EDIT: Menampilkan halaman formulir edit kelas.
+     */
+    public function edit($id)
+    {
+        $kelas = Kelas::findOrFail($id);
+        return view('guru.kelas.edit', compact('kelas'));
+    }
+
+    /**
+     * 6. UPDATE: Memperbarui data kelas di database (Update Data).
      */
     public function update(Request $request, $id)
     {
@@ -101,11 +118,11 @@ class KelasController extends Controller
 
         $kelas->update($validated);
 
-        return redirect('/guru#kelas')->with('success', "Kelas '{$kelas->nama_kelas}' berhasil diperbarui!");
+        return redirect()->route('kelas.index')->with('success', "Kelas '{$kelas->nama_kelas}' berhasil diperbarui!");
     }
 
     /**
-     * Hapus kelas dari database (Delete Data).
+     * 7. DESTROY: Menghapus data kelas dari database (Delete Data).
      */
     public function destroy($id)
     {
@@ -113,6 +130,6 @@ class KelasController extends Controller
         $nama = $kelas->nama_kelas;
         $kelas->delete();
 
-        return redirect('/guru#kelas')->with('success', "Kelas '{$nama}' berhasil dihapus!");
+        return redirect()->route('kelas.index')->with('success', "Kelas '{$nama}' berhasil dihapus!");
     }
 }

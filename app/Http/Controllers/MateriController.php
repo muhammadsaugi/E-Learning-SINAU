@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
 use App\Models\Materi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -9,7 +10,32 @@ use Illuminate\Support\Facades\Storage;
 class MateriController extends Controller
 {
     /**
-     * Menyimpan materi pembelajaran baru dengan validasi lengkap (Create Data).
+     * 1. INDEX: Menampilkan daftar materi (Read Data).
+     */
+    public function index(Request $request)
+    {
+        $materiList = Materi::with('kelas')->latest()->get();
+        $kelasList  = Kelas::all();
+
+        // Jika diakses dari dashboard tab, arahkan ke tab materi
+        if (!$request->wantsJson() && !$request->has('standalone')) {
+            return redirect('/guru#materi');
+        }
+
+        return view('guru.materi.index', compact('materiList', 'kelasList'));
+    }
+
+    /**
+     * 2. CREATE: Menampilkan halaman formulir unggah materi baru.
+     */
+    public function create()
+    {
+        $kelasList = Kelas::all();
+        return view('guru.materi.create', compact('kelasList'));
+    }
+
+    /**
+     * 3. STORE: Menyimpan materi pembelajaran baru (Create Data).
      */
     public function store(Request $request)
     {
@@ -43,7 +69,26 @@ class MateriController extends Controller
     }
 
     /**
-     * Memperbarui materi pembelajaran (Update Data).
+     * 4. SHOW: Menampilkan detail materi tertentu (Read by ID).
+     */
+    public function show($id)
+    {
+        $materi = Materi::with('kelas')->findOrFail($id);
+        return view('guru.materi.show', compact('materi'));
+    }
+
+    /**
+     * 5. EDIT: Menampilkan halaman formulir edit materi.
+     */
+    public function edit($id)
+    {
+        $materi = Materi::findOrFail($id);
+        $kelasList = Kelas::all();
+        return view('guru.materi.edit', compact('materi', 'kelasList'));
+    }
+
+    /**
+     * 6. UPDATE: Memperbarui data materi pembelajaran (Update Data).
      */
     public function update(Request $request, $id)
     {
@@ -79,7 +124,7 @@ class MateriController extends Controller
     }
 
     /**
-     * Hapus materi (Delete Data).
+     * 7. DESTROY: Menghapus data materi (Delete Data).
      */
     public function destroy($id)
     {
@@ -93,7 +138,7 @@ class MateriController extends Controller
     }
 
     /**
-     * Download file materi secara aman.
+     * Khusus: Download berkas materi.
      */
     public function download($id)
     {
