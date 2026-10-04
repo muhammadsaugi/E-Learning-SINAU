@@ -242,20 +242,40 @@ public function down(): void
 ## 5. Membuat Sekaligus
 
 ```bash
-# Model + Migration + Resource Controller (PALING SERING DIPAKAI)
+# ✅ SINGKATAN TERPENDEK — Model + Migration + Resource Controller
+php artisan make:model NamaModel -mcr
+
+# Sama persis dengan perintah panjang di bawah ini:
 php artisan make:model NamaModel -m --resource --controller
 
-# Singkatan: Model + Migration + Controller
-php artisan make:model NamaModel -mc
-
 # Model + Migration + Resource Controller + Seeder + Factory
-php artisan make:model NamaModel -m -s -f --resource --controller
+php artisan make:model NamaModel -mcrfs
+
+# Model + Migration + Resource Controller + Seeder + Factory + Form Request
+php artisan make:model NamaModel -mcrfsR
+
+# SEMUA sekaligus (migration, seeder, factory, policy, resource controller, request)
+php artisan make:model NamaModel -a
 
 # Contoh nyata (seperti di proyek SINAU):
-php artisan make:model Kelas -m --resource --controller
-php artisan make:model Materi -m --resource --controller
-php artisan make:model Kuis -m --resource --controller
+php artisan make:model Kelas -mcr
+php artisan make:model Materi -mcr
+php artisan make:model Kuis -mcr
 ```
+
+### Tabel Semua Flag Shorthand `make:model`
+
+| Flag | Kepanjangan     | Fungsi                                    |
+|------|-----------------|-------------------------------------------|
+| `-m` | `--migration`   | Buat file migration                       |
+| `-c` | `--controller`  | Buat Controller                           |
+| `-r` | `--resource`    | Controller jadi Resource (7 method CRUD)  |
+| `-s` | `--seed`        | Buat Seeder                               |
+| `-f` | `--factory`     | Buat Factory (data dummy)                 |
+| `-R` | `--requests`    | Buat Form Request class (validasi)        |
+| `-a` | `--all`         | Semua flag di atas sekaligus              |
+
+> 💡 **Tips:** Flag pendek bisa digabung semua dalam satu tanda `-`, contoh: `-mcr`, `-mcrfs`, `-a`.
 
 ---
 
