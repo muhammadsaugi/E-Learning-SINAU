@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class KelasController extends Controller
 {
     /**
-     * 1. INDEX: Menampilkan daftar data kelas (Read Data).
+     *  INDEX: Menampilkan daftar data kelas (Read Data).
      * Mendukung pencarian (search) dan memuat ringkasan materi & kuis.
      */
     public function index(Request $request)
@@ -37,7 +37,7 @@ class KelasController extends Controller
     }
 
     /**
-     * 2. CREATE: Menampilkan halaman formulir tambah kelas baru.
+     *  CREATE: Menampilkan halaman formulir tambah kelas baru.
      */
     public function create()
     {
@@ -45,7 +45,7 @@ class KelasController extends Controller
     }
 
     /**
-     * 3. STORE: Menyimpan data kelas baru ke database (Create Data).
+     *  STORE: Menyimpan data kelas baru ke database (Create Data).
      */
     public function store(Request $request)
     {
@@ -75,7 +75,7 @@ class KelasController extends Controller
     }
 
     /**
-     * 4. SHOW: Menampilkan detail satu kelas tertentu (Read by ID).
+     * SHOW: Menampilkan detail satu kelas tertentu (Read by ID).
      */
     public function show($id)
     {
@@ -89,7 +89,7 @@ class KelasController extends Controller
     }
 
     /**
-     * 5. EDIT: Menampilkan halaman formulir edit kelas.
+     * EDIT: Menampilkan halaman formulir edit kelas.
      */
     public function edit($id)
     {
@@ -98,7 +98,7 @@ class KelasController extends Controller
     }
 
     /**
-     * 6. UPDATE: Memperbarui data kelas di database (Update Data).
+     * UPDATE: Memperbarui data kelas di database (Update Data).
      */
     public function update(Request $request, $id)
     {
@@ -122,7 +122,7 @@ class KelasController extends Controller
     }
 
     /**
-     * 7. DESTROY: Menghapus data kelas dari database (Delete Data).
+     * DESTROY: Menghapus data kelas dari database (Delete Data).
      */
     public function destroy($id)
     {
