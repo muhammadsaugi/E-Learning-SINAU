@@ -43,14 +43,14 @@ class MateriController extends Controller
             'kelas_id'    => 'required|exists:kelas,id',
             'judul'       => 'required|string|min:3|max:255',
             'deskripsi'   => 'nullable|string|max:1000',
-            'file_materi' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,zip|max:20480',
+            'file_materi' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,zip|max:8192',
         ], [
             'kelas_id.required'   => 'Silakan pilih kelas terlebih dahulu.',
             'kelas_id.exists'     => 'Kelas yang dipilih tidak valid.',
             'judul.required'      => 'Judul materi wajib diisi.',
             'judul.min'           => 'Judul materi minimal harus 3 karakter.',
             'file_materi.mimes'   => 'Format file harus berupa PDF, DOC, DOCX, PPT, PPTX, atau ZIP.',
-            'file_materi.max'     => 'Ukuran file maksimal adalah 20MB.',
+            'file_materi.max'     => 'Ukuran file materi maksimal adalah 8 MB agar tidak terjadi error sistem.',
         ]);
 
         $filePath = null;
@@ -98,14 +98,14 @@ class MateriController extends Controller
             'kelas_id'    => 'required|exists:kelas,id',
             'judul'       => 'required|string|min:3|max:255',
             'deskripsi'   => 'nullable|string|max:1000',
-            'file_materi' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,zip|max:20480',
+            'file_materi' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,zip|max:8192',
         ], [
             'kelas_id.required'   => 'Silakan pilih kelas terlebih dahulu.',
             'kelas_id.exists'     => 'Kelas yang dipilih tidak valid.',
             'judul.required'      => 'Judul materi wajib diisi.',
             'judul.min'           => 'Judul materi minimal harus 3 karakter.',
             'file_materi.mimes'   => 'Format file harus berupa PDF, DOC, DOCX, PPT, PPTX, atau ZIP.',
-            'file_materi.max'     => 'Ukuran file maksimal adalah 20MB.',
+            'file_materi.max'     => 'Ukuran file materi maksimal adalah 8 MB agar tidak terjadi error sistem.',
         ]);
 
         if ($request->hasFile('file_materi')) {

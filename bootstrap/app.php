@@ -18,4 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
+
+        $exceptions->render(function (\Illuminate\Http\Exceptions\PostTooLargeException $e, Request $request) {
+            return redirect()->back()->with('error', 'Ukuran file yang Anda unggah terlalu besar (melebihi batas server 8 MB). Silakan pilih berkas yang lebih kecil atau kompres terlebih dahulu.');
+        });
     })->create();
