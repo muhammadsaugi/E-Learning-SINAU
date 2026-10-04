@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class KuisController extends Controller
 {
     /**
-     * 1. INDEX: Menampilkan daftar kuis (Read Data).
+     * INDEX: Menampilkan daftar kuis (Read Data)
      */
     public function index(Request $request)
     {
@@ -25,7 +25,7 @@ class KuisController extends Controller
     }
 
     /**
-     * 2. CREATE: Menampilkan halaman formulir buat kuis baru.
+     * CREATE: Menampilkan halaman formulir buat kuis dan ujian
      */
     public function create()
     {
@@ -34,7 +34,7 @@ class KuisController extends Controller
     }
 
     /**
-     * 3. STORE: Menyimpan kuis baru dengan validasi lengkap (Create Data).
+     * STORE: Menyimpan kuis baru dengan validasi lengkap (Create Data).
      */
     public function store(Request $request)
     {
@@ -62,7 +62,7 @@ class KuisController extends Controller
     }
 
     /**
-     * 4. SHOW: Menampilkan detail kuis beserta butir soal (Read by ID).
+     * SHOW: Menampilkan detail kuis beserta butir soal (Read by ID)
      */
     public function show($id)
     {
@@ -71,7 +71,7 @@ class KuisController extends Controller
     }
 
     /**
-     * 5. EDIT: Menampilkan halaman formulir edit kuis.
+     * EDIT: Menampilkan halaman formulir edit kuis
      */
     public function edit($id)
     {
@@ -81,7 +81,7 @@ class KuisController extends Controller
     }
 
     /**
-     * 6. UPDATE: Memperbarui informasi kuis (Update Data).
+     * UPDATE: Memperbarui informasi kuis (Update Data)
      */
     public function update(Request $request, $id)
     {
@@ -106,7 +106,7 @@ class KuisController extends Controller
     }
 
     /**
-     * 7. DESTROY: Menghapus kuis beserta seluruh soalnya (Delete Data).
+     * DESTROY: Menghapus kuis beserta seluruh soalnya (Delete Data)
      */
     public function destroy($id)
     {

@@ -5,7 +5,7 @@
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
         <div>
             <h1 class="font-display text-2xl text-[#241508]">Bank Soal & Kuis</h1>
-            <p class="text-sm text-[#6E4A2E] mt-0.5">Kelola topik kuis, ujian, dan butir-butir soal evaluasi.</p>
+            <p class="text-sm text-[#6E4A2E] mt-0.5">Kelola topik kuis, ujian, dan butir-butir soal</p>
         </div>
         <div class="flex items-center gap-2">
             <!-- Search -->
