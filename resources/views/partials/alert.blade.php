@@ -16,6 +16,8 @@
             </svg>
         </button>
     </div>
+@endif
+
 @if(session('error'))
     <div id="flash-danger" class="fixed top-5 right-5 z-50 flex items-start gap-3 bg-red-900 text-white text-xs font-medium px-5 py-3.5 rounded-xl shadow-2xl border border-red-700 max-w-sm">
         <div class="w-5 h-5 rounded-full bg-red-700 flex items-center justify-center shrink-0 mt-0.5">
