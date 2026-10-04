@@ -33,7 +33,7 @@
             <!-- Materi -->
             <div>
                 <div class="flex items-center justify-between mb-2">
-                    <h4 class="text-xs font-semibold text-[#4A2E1A] uppercase tracking-wider">Modul Materi</h4>
+                    <h4 class="text-xs font-semibold text-[#4A2E1A] uppercase tracking-wider">Modul Materi terbaru</h4>
                     <span class="text-[10px] bg-[#F3EDE2] text-[#6E4A2E] px-2 py-0.5 rounded-full font-medium" id="detail-total-materi">0 modul</span>
                 </div>
                 <div id="detail-list-materi" class="space-y-1.5 text-xs text-[#6E4A2E]">

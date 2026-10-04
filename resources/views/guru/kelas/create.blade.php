@@ -30,7 +30,7 @@
                         </div>
                         <div>
                             <h1 class="font-display text-lg text-[#FAF8F4]">Tambah Kelas Baru</h1>
-                            <p class="text-xs text-[#D4C0A0] mt-0.5">Isi rincian kelas pembelajaran yang akan Anda ampu.</p>
+                            <p class="text-xs text-[#D4C0A0] mt-0.5">Isi rincian kelas pembelajaran yang akan Anda ampuh.</p>
                         </div>
                     </div>
                     <a href="{{ route('kelas.index') }}" class="text-xs text-[#D4C0A0] hover:text-[#FAF8F4] px-3 py-1.5 rounded-lg transition-colors" style="background:rgba(255,255,255,0.1);">
@@ -60,7 +60,7 @@
                         </label>
                         <select name="mata_pelajaran" required class="form-input @error('mata_pelajaran') border-red-400 @enderror">
                             <option value="">— Pilih Mata Pelajaran —</option>
-                            @foreach(['Matematika','Biologi','Fisika','Kimia','Bahasa Indonesia','Bahasa Inggris','Sejarah','Geografi','Ekonomi','Sosiologi','Informatika','Seni Budaya','PJOK','PPKn','Prakarya','Bahasa Asing'] as $mp)
+                            @foreach(['Matematika','Biologi','Fisika','Kimia','Bahasa Indonesia','Bahasa Inggris','Sejarah','Geografi','Ekonomi','Sosiologi','Informatika','Seni Budaya','PJOK','PPKn','Prakarya','Bahasa Asing','bahasa minang'] as $mp)
                                 <option value="{{ $mp }}" {{ old('mata_pelajaran') == $mp ? 'selected' : '' }}>
                                     {{ $mp }}
                                 </option>

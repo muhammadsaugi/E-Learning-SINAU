@@ -59,7 +59,7 @@
                             Mata Pelajaran <span class="text-red-500">*</span>
                         </label>
                         <select name="mata_pelajaran" required class="form-input @error('mata_pelajaran') border-red-400 @enderror">
-                            @foreach(['Matematika','Biologi','Fisika','Kimia','Bahasa Indonesia','Bahasa Inggris','Sejarah','Geografi','Ekonomi','Sosiologi','Informatika','Seni Budaya','PJOK','PPKn','Prakarya','Bahasa Asing'] as $mp)
+                            @foreach(['Matematika','Biologi','Fisika','Kimia','Bahasa Indonesia','Bahasa Inggris','Sejarah','Geografi','Ekonomi','Sosiologi','Informatika','Seni Budaya','PJOK','PPKn','Prakarya','Bahasa Asing','bahasa minang'] as $mp)
                                 <option value="{{ $mp }}" {{ old('mata_pelajaran', $kelas->mata_pelajaran) == $mp ? 'selected' : '' }}>
                                     {{ $mp }}
                                 </option>
