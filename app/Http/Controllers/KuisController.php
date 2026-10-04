@@ -56,9 +56,24 @@ class KuisController extends Controller
             'passing_grade.max'      => 'Passing grade maksimal 100.',
         ]);
 
-        Kuis::create($validated);
+        $kuis = Kuis::create($validated);
 
-        return redirect('/guru#banksoal')->with('success', 'Kuis baru berhasil dibuat! Silakan tambahkan butir soal di bawah.');
+        // Jika guru juga langsung mengisi pertanyaan pertama saat membuat kuis:
+        if ($request->filled('pertanyaan')) {
+            $soalValidated = $request->validate([
+                'pertanyaan'    => 'required|string|min:3',
+                'tipe'          => 'required|in:pilihan_ganda,esai',
+                'opsi_a'        => 'required_if:tipe,pilihan_ganda|nullable|string',
+                'opsi_b'        => 'required_if:tipe,pilihan_ganda|nullable|string',
+                'opsi_c'        => 'nullable|string',
+                'opsi_d'        => 'nullable|string',
+                'kunci_jawaban' => 'required|string',
+            ]);
+            $soalValidated['kuis_id'] = $kuis->id;
+            Soal::create($soalValidated);
+        }
+
+        return redirect()->route('kuis.show', $kuis->id)->with('success', "Kuis '{$kuis->judul}' berhasil dibuat! Anda dapat menambah atau mengelola butir pertanyaan di halaman ini.");
     }
 
     /**
